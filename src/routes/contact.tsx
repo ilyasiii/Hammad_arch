@@ -15,8 +15,57 @@ export const Route = createFileRoute("/contact")({
   component: Contact,
 });
 
+const WEB3FORMS_ACCESS_KEY = "788522df-4c9a-4def-ae85-f2af8161b251";
+
 function Contact() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim();
+    const msg = String(data.get("msg") ?? "").trim();
+
+    setStatus("sending");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `New enquiry from ${name || "website"}`,
+          from_name: name || "Ph.G website",
+          name,
+          email,
+          phone,
+          message: msg,
+          // honeypot — bots will fill this and get silently dropped by Web3Forms
+          botcheck: "",
+        }),
+      });
+
+      const result = (await res.json()) as { success: boolean; message?: string };
+      if (res.ok && result.success) {
+        setStatus("sent");
+        form.reset();
+      } else {
+        setStatus("error");
+        setErrorMsg(result.message ?? "Something went wrong. Please try again.");
+      }
+    } catch {
+      setStatus("error");
+      setErrorMsg("Network error. Please try again.");
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -84,7 +133,7 @@ function Contact() {
         </div>
 
         <div className="col-span-12 md:col-span-6">
-          {sent ? (
+          {status === "sent" ? (
             <div className="bg-ink text-cream p-12 md:p-16">
               <p className="font-label text-clay">✶ Received</p>
               <h3 className="font-display mt-6 text-5xl">
@@ -94,10 +143,7 @@ function Contact() {
             </div>
           ) : (
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setSent(true);
-              }}
+              onSubmit={handleSubmit}
               className="bg-card p-8 md:p-12"
             >
               <p className="font-label text-muted-foreground">Nº 001 New Enquiry</p>
@@ -105,7 +151,7 @@ function Contact() {
               <div className="mt-10 space-y-8">
                 <Field label="Your name" name="name" />
                 <Field label="Your email" name="email" type="email" />
-                <Field label="Where is the site?" name="place" />
+                <Field label="Phone number" name="phone" type="tel" />
                 <div>
                   <label className="font-label block text-muted-foreground" htmlFor="msg">
                     Tell us about the project
@@ -121,11 +167,26 @@ function Contact() {
                 </div>
               </div>
 
+              {/* Honeypot: real users leave this empty; bots fill it and get rejected. */}
+              <input
+                type="checkbox"
+                name="botcheck"
+                tabIndex={-1}
+                autoComplete="off"
+                style={{ position: "absolute", left: "-9999px" }}
+                aria-hidden="true"
+              />
+
+              {status === "error" && (
+                <p className="mt-6 text-sm text-destructive">{errorMsg}</p>
+              )}
+
               <button
                 type="submit"
-                className="font-label mt-12 group inline-flex w-full items-center justify-between border-t border-ink/80 pt-4 text-ink hover:text-clay"
+                disabled={status === "sending"}
+                className="font-label mt-12 group inline-flex w-full items-center justify-between border-t border-ink/80 pt-4 text-ink hover:text-clay disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send enquiry
+                {status === "sending" ? "Sending…" : "Send enquiry"}
                 <span className="transition-transform group-hover:translate-x-2">→</span>
               </button>
             </form>
