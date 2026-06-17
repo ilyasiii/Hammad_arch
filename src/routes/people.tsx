@@ -15,13 +15,13 @@ export const Route = createFileRoute("/people")({
 });
 
 const team = [
-  { role: "Principal Architect", name: "Ar. Hammad Hussain" },
-  { role: "Senior Architect", name: "Ar. Syed Faraz Ali" },
-  { role: "Junior Architect", name: "Ar. Munazah Babar" },
-  { role: "Junior Architect", name: "Ar. Zeeshan Haider" },
-  { role: "Junior Architect", name: "Ar. Yadullah" },
-  { role: "Managing Director", name: "Muhammad Ilyas" },
-  { role: "Media Director", name: "Qammar Abbas" },
+  { role: "Principal Architect", name: "Ar. Hammad Hussain", photo: "" },
+  { role: "Senior Architect", name: "Ar. Syed Faraz Ali", photo: "" },
+  { role: "Junior Architect", name: "Ar. Munazah Babar", photo: "" },
+  { role: "Junior Architect", name: "Ar. Zeeshan Haider", photo: "/team/zeeshan-haider.jpeg" },
+  { role: "Junior Architect", name: "Ar. Yadullah", photo: "" },
+  { role: "Managing Director", name: "Muhammad Ilyas", photo: "/team/muhammad-ilyas.jpg" },
+  { role: "Media Director", name: "Qammar Abbas", photo: "" },
 ];
 
 function People() {
@@ -41,7 +41,16 @@ function People() {
         <div className="grid grid-cols-1 gap-10 border-t border-border pt-12 md:grid-cols-2 lg:grid-cols-3">
           {team.map((p) => (
             <div key={p.name} className="border-b border-border pb-10">
-              <div className="mb-6 aspect-[4/5] w-full bg-muted" />
+              <div className="mb-6 aspect-[4/5] w-full overflow-hidden bg-muted">
+                {p.photo ? (
+                  <img
+                    src={p.photo}
+                    alt={p.name}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                ) : null}
+              </div>
               <p className="font-label text-clay">{p.role}</p>
               <h3 className="font-display mt-3 text-3xl md:text-4xl">{p.name}</h3>
             </div>

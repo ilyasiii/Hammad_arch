@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 
 export function SiteHeader() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/75 backdrop-blur-md">
-      <div className="mx-auto flex max-w-[1600px] items-center justify-between px-6 py-3 md:px-10">
+    <header className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-border bg-background">
+      <div className="mx-auto flex h-full max-w-[1600px] items-center justify-between px-6 md:px-10">
         <Link to="/" className="font-display text-xl leading-none">
           Ph. G <span className="text-clay italic">studio</span>
         </Link>

@@ -2,9 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import hero from "@/assets/hero.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
 import p1 from "@/assets/project-1.jpg";
 import p2 from "@/assets/project-2.jpg";
 
@@ -21,7 +18,12 @@ export const Route = createFileRoute("/")({
 });
 
 
-const slides = [hero, hero2, hero3, p1, p2];
+const slides = [
+  "/projects/home/home-1.jpg",
+  "/projects/home/home-2.jpg",
+  "/projects/home/home-3.jpg",
+  "/projects/home/home-4.jpg",
+];
 
 const pillars = [
   {
@@ -63,8 +65,10 @@ function Index() {
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
 
-      {/* HERO SLIDESHOW */}
-      <section className="relative h-[100svh] w-full overflow-hidden">
+      {/* HERO SLIDESHOW — fills the viewport below the solid navbar. The 16:9
+          photos use object-cover so they cover the frame edge-to-edge. With
+          the frame near-16:9 the crop is minimal (~3% top/bottom). */}
+      <section className="relative mt-16 h-[calc(100svh-4rem)] w-full overflow-hidden bg-background">
         {slides.map((src, idx) => (
           <img
             key={idx}
@@ -74,7 +78,7 @@ function Index() {
               i === idx ? "opacity-100" : "opacity-0"
             }`}
             width={1920}
-            height={1280}
+            height={1080}
           />
         ))}
         <div className="absolute inset-x-0 bottom-8 z-10 flex justify-center gap-3">

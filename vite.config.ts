@@ -12,4 +12,10 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Deploy target. Vercel detects this automatically via the VERCEL=1 env var
+  // it sets during builds, but we also honor an explicit NITRO_PRESET env var
+  // so you can override locally (e.g. NITRO_PRESET=node-server npm run build).
+  nitro: {
+    preset: process.env.NITRO_PRESET ?? (process.env.VERCEL ? "vercel" : "cloudflare"),
+  },
 });
