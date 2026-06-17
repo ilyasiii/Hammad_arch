@@ -6,10 +6,19 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// Pick a Nitro preset:
+//   1. If NITRO_PRESET env var is set, honour it (used locally for `node-server` builds).
+//   2. Otherwise default to `vercel` so Vercel deployments get a real serverless function
+//      (the Lovable preset SKIPS Nitro entirely unless we pass `nitro: { ... }` here).
+const nitroPreset = process.env.NITRO_PRESET ?? "vercel";
+
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+  },
+  nitro: {
+    preset: nitroPreset,
   },
 });
