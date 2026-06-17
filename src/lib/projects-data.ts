@@ -1,11 +1,3 @@
-import p1 from "@/assets/project-1.jpg";
-import p2 from "@/assets/project-2.jpg";
-import p3 from "@/assets/project-3.jpg";
-import hero from "@/assets/hero.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
-import about from "@/assets/about.jpg";
-
 export type Project = {
   slug: string;
   title: string;
@@ -20,107 +12,98 @@ export type Project = {
 export const projectsByCategory: Record<string, Project[]> = {
   commercial: [
     {
-      slug: "carmo-offices",
-      title: "Carmo Offices",
-      place: "Lisboa, PT",
-      year: "2024",
-      blurb: "A workplace carved into a 19th-century shell.",
+      slug: "artisan-bakery",
+      title: "Artisan Bakery",
+      place: "Commercial",
+      year: "",
+      blurb: "A boutique bakery interior shaped around craft and warmth.",
       description:
-        "Carmo Offices reorganises a slender Pombaline block into a daylit workplace. Limewashed walls, oak floors and a central stair stitched in steel form a calm armature for daily work.",
-      cover: hero2,
-      gallery: [hero2, p3, p2, hero],
-    },
-    {
-      slug: "kunsthal-bjorvika",
-      title: "Kunsthal Bjørvika",
-      place: "Oslo, NO",
-      year: "2022",
-      blurb: "A small art hall at the waterline of the fjord.",
-      description:
-        "A compact exhibition hall facing the Oslofjord. Rough board-marked concrete plinths support a timber-clad upper volume, lit by north-facing clerestories.",
-      cover: p3,
-      gallery: [p3, hero3, p1, p2],
-    },
-    {
-      slug: "forest-pavilion-hq",
-      title: "Forest Pavilion HQ",
-      place: "Telemark, NO",
-      year: "2023",
-      blurb: "Headquarters in a clearing of pine and granite.",
-      description:
-        "A low timber building threaded between existing pines. Glulam frames, charred larch cladding and a green roof return the volume to its setting.",
-      cover: p2,
-      gallery: [p2, hero, p1, hero2],
+        "A commercial interior for an artisan bakery. The plan reads as a calm display floor, with material textures and lighting tuned to the rhythm of fresh-baked product on display.",
+      cover: "/projects/commercial/artisanbakery/a1.jpeg",
+      gallery: [
+        "/projects/commercial/artisanbakery/a1.jpeg",
+        "/projects/commercial/artisanbakery/a2.jpeg",
+        "/projects/commercial/artisanbakery/a3.jpeg",
+        "/projects/commercial/artisanbakery/a4.jpeg",
+        "/projects/commercial/artisanbakery/a5.jpeg",
+      ],
     },
   ],
   residential: [
     {
-      slug: "casa-penedo",
-      title: "Casa Penedo",
-      place: "Sintra, PT",
-      year: "2024",
-      blurb: "A house balanced between two granite boulders.",
+      slug: "visal-home",
+      title: "Visal Home",
+      place: "Residential",
+      year: "",
+      blurb: "A family residence balancing privacy and openness.",
       description:
-        "Casa Penedo sits between two granite outcrops in Sintra. Lime-rendered walls and a long copper roof frame views down toward the Atlantic.",
-      cover: p1,
-      gallery: [p1, hero, hero3, about],
+        "A residential project organised around daylit communal volumes and quieter, sheltered private wings. The composition keeps proportion and material restraint at the centre.",
+      cover: "/projects/residential/visalhome/v1.jpeg",
+      gallery: [
+        "/projects/residential/visalhome/v1.jpeg",
+        "/projects/residential/visalhome/v2.jpeg",
+        "/projects/residential/visalhome/v3.jpeg",
+        "/projects/residential/visalhome/v4.jpeg",
+        "/projects/residential/visalhome/v6.jpeg",
+      ],
     },
     {
-      slug: "hus-vid-sjo",
-      title: "Hús við Sjó",
-      place: "Tórshavn, FO",
-      year: "2022",
-      blurb: "A family house at the edge of the harbour.",
+      slug: "bazar-home",
+      title: "Bazar Home",
+      place: "Residential",
+      year: "",
+      blurb: "A residence threaded between street life and inner courtyards.",
       description:
-        "A turf-roofed dwelling looking onto Tórshavn harbour. Pine interiors and deep window reveals shelter the rooms from Atlantic weather.",
-      cover: hero,
-      gallery: [hero, p2, hero2, about],
-    },
-    {
-      slug: "quinta-dos-olivais",
-      title: "Quinta dos Olivais",
-      place: "Évora, PT",
-      year: "2019",
-      blurb: "A farmhouse renewed within an olive grove.",
-      description:
-        "An existing farmhouse re-walled in lime and tile. New courtyards mediate between the olive grove and the cool interior rooms.",
-      cover: hero3,
-      gallery: [hero3, p1, p3, about],
+        "A residential project that mediates between an active urban street edge and quiet interior rooms, with daylight and air pulled deep into the plan through a small set of measured openings.",
+      cover: "/projects/residential/bazarhome/b1.jpeg",
+      gallery: [
+        "/projects/residential/bazarhome/b1.jpeg",
+        "/projects/residential/bazarhome/a2.jpeg",
+        "/projects/residential/bazarhome/a3.jpeg",
+      ],
     },
   ],
   others: [
     {
-      slug: "skog-schoolhouse",
-      title: "Skog Schoolhouse",
-      place: "Tromsø, NO",
-      year: "2018",
-      blurb: "A primary school in the arctic light.",
+      slug: "nca",
+      title: "NCA",
+      place: "Institutional",
+      year: "",
+      blurb: "An institutional project for the National College of Arts.",
       description:
-        "A timber schoolhouse organised around a top-lit central hall. Classrooms open onto sheltered south-facing terraces.",
-      cover: p2,
-      gallery: [p2, hero2, hero, p3],
+        "An institutional project developed for the National College of Arts. The full set of plates is shown below.",
+      cover: "/projects/institutional/nca/nca1.jpeg",
+      gallery: [
+        "/projects/institutional/nca/nca1.jpeg",
+        "/projects/institutional/nca/nca2.jpeg",
+        "/projects/institutional/nca/nca3.jpeg",
+        "/projects/institutional/nca/nca4.jpeg",
+        "/projects/institutional/nca/nca5.jpeg",
+        "/projects/institutional/nca/nca6.jpeg",
+        "/projects/institutional/nca/nca7.jpeg",
+        "/projects/institutional/nca/nca8.jpeg",
+        "/projects/institutional/nca/nca9.jpeg",
+        "/projects/institutional/nca/nca10.jpeg",
+        "/projects/institutional/nca/nca11.jpeg",
+        "/projects/institutional/nca/nca12.jpeg",
+      ],
     },
     {
-      slug: "carmo-cloister",
-      title: "Carmo Cloister",
-      place: "Lisboa, PT",
-      year: "2021",
-      blurb: "A cultural reuse of a ruined cloister.",
+      slug: "un-main-court",
+      title: "UN Main Court",
+      place: "Institutional",
+      year: "",
+      blurb: "An institutional courtyard project for a UN-scale civic ensemble.",
       description:
-        "The remains of a cloister stabilised and lightly inhabited. A new steel-and-glass insertion holds reading rooms above the old arcade.",
-      cover: p3,
-      gallery: [p3, hero3, p1, about],
-    },
-    {
-      slug: "atelier-sonnerland",
-      title: "Atelier Sønnerland",
-      place: "Bergen, NO",
-      year: "2020",
-      blurb: "A painter's studio above the fjord.",
-      description:
-        "A single-room atelier of board-formed concrete and pine. A high north window throws even light across the working wall.",
-      cover: hero,
-      gallery: [hero, p2, hero2, about],
+        "An institutional project developed around a generous main court. The plates illustrate the spatial sequence between approach, threshold, and the central public room.",
+      cover: "/projects/institutional/un_maincourt/u1.jpeg",
+      gallery: [
+        "/projects/institutional/un_maincourt/u1.jpeg",
+        "/projects/institutional/un_maincourt/u2.jpeg",
+        "/projects/institutional/un_maincourt/u3.jpeg",
+        "/projects/institutional/un_maincourt/u4.jpeg",
+        "/projects/institutional/un_maincourt/u5.jpeg",
+      ],
     },
   ],
 };

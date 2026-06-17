@@ -23,7 +23,7 @@ const serviceGroups = [
       "Urban Planning",
       "Residential Projects",
       "Commercial Projects",
-      "Academic Projects",
+      "Institutional Projects",
       "Landscape Design",
     ],
   },

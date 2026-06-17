@@ -2,8 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import p1 from "@/assets/project-1.jpg";
-import p2 from "@/assets/project-2.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -46,11 +44,6 @@ const pillars = [
     title: "Geometry",
     body: "Geometry provides order, proportion, structure, and clarity. It is the framework through which ideas become built form.",
   },
-];
-
-const featured = [
-  { n: "01", title: "Casa Penedo", place: "Sintra, PT", year: "2024", img: p1, type: "Residence" },
-  { n: "02", title: "Forest Pavilion", place: "Telemark, NO", year: "2023", img: p2, type: "Retreat" },
 ];
 
 function Index() {
@@ -140,48 +133,13 @@ function Index() {
         </div>
       </section>
 
-      {/* FEATURED 2 PROJECTS */}
-      <section className="hairline mx-auto max-w-[1600px] px-6 pt-16 md:px-10">
-        <div className="mb-12 flex items-end justify-between">
+      {/* CTA TO PROJECTS */}
+      <section className="hairline mx-auto max-w-[1600px] px-6 py-20 md:px-10">
+        <div className="flex items-end justify-between">
           <p className="font-label text-muted-foreground">§ Selected Work</p>
           <Link to="/projects" className="font-label text-muted-foreground hover:text-clay">
             All projects →
           </Link>
-        </div>
-
-        <div className="space-y-24">
-          {featured.map((p, idx) => (
-            <article
-              key={p.n}
-              className={`grid grid-cols-12 gap-6 ${idx % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""}`}
-            >
-              <div className="col-span-12 md:col-span-8">
-                <div className="aspect-[4/3] overflow-hidden bg-muted">
-                  <img
-                    src={p.img}
-                    alt={p.title}
-                    loading="lazy"
-                    width={1600}
-                    height={1200}
-                    className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out hover:scale-[1.03]"
-                  />
-                </div>
-              </div>
-              <div className="col-span-12 flex flex-col justify-between md:col-span-4">
-                <div>
-                  <p className="font-label text-clay">Nº {p.n}</p>
-                  <h3 className="font-display mt-6 text-5xl md:text-6xl">{p.title}</h3>
-                  <p className="mt-4 text-muted-foreground italic">{p.place} · {p.year}</p>
-                </div>
-                <dl className="hairline mt-12 grid grid-cols-2 gap-y-3 pt-6 text-sm">
-                  <dt className="font-label text-muted-foreground">Type</dt>
-                  <dd className="text-right">{p.type}</dd>
-                  <dt className="font-label text-muted-foreground">Status</dt>
-                  <dd className="text-right">Completed</dd>
-                </dl>
-              </div>
-            </article>
-          ))}
         </div>
       </section>
 

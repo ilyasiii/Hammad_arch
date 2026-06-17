@@ -14,9 +14,7 @@ import { Route as PeopleRouteImport } from './routes/people'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProjectsResidentialRouteImport } from './routes/projects.residential'
-import { Route as ProjectsOthersRouteImport } from './routes/projects.others'
-import { Route as ProjectsCommercialRouteImport } from './routes/projects.commercial'
+import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as ProjectsCategorySlugRouteImport } from './routes/projects.$category.$slug'
 
 const ProjectsRoute = ProjectsRouteImport.update({
@@ -44,19 +42,9 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectsResidentialRoute = ProjectsResidentialRouteImport.update({
-  id: '/residential',
-  path: '/residential',
-  getParentRoute: () => ProjectsRoute,
-} as any)
-const ProjectsOthersRoute = ProjectsOthersRouteImport.update({
-  id: '/others',
-  path: '/others',
-  getParentRoute: () => ProjectsRoute,
-} as any)
-const ProjectsCommercialRoute = ProjectsCommercialRouteImport.update({
-  id: '/commercial',
-  path: '/commercial',
+const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => ProjectsRoute,
 } as any)
 const ProjectsCategorySlugRoute = ProjectsCategorySlugRouteImport.update({
@@ -71,9 +59,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/people': typeof PeopleRoute
   '/projects': typeof ProjectsRouteWithChildren
-  '/projects/commercial': typeof ProjectsCommercialRoute
-  '/projects/others': typeof ProjectsOthersRoute
-  '/projects/residential': typeof ProjectsResidentialRoute
+  '/projects/': typeof ProjectsIndexRoute
   '/projects/$category/$slug': typeof ProjectsCategorySlugRoute
 }
 export interface FileRoutesByTo {
@@ -81,10 +67,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/people': typeof PeopleRoute
-  '/projects': typeof ProjectsRouteWithChildren
-  '/projects/commercial': typeof ProjectsCommercialRoute
-  '/projects/others': typeof ProjectsOthersRoute
-  '/projects/residential': typeof ProjectsResidentialRoute
+  '/projects': typeof ProjectsIndexRoute
   '/projects/$category/$slug': typeof ProjectsCategorySlugRoute
 }
 export interface FileRoutesById {
@@ -94,9 +77,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/people': typeof PeopleRoute
   '/projects': typeof ProjectsRouteWithChildren
-  '/projects/commercial': typeof ProjectsCommercialRoute
-  '/projects/others': typeof ProjectsOthersRoute
-  '/projects/residential': typeof ProjectsResidentialRoute
+  '/projects/': typeof ProjectsIndexRoute
   '/projects/$category/$slug': typeof ProjectsCategorySlugRoute
 }
 export interface FileRouteTypes {
@@ -107,9 +88,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/people'
     | '/projects'
-    | '/projects/commercial'
-    | '/projects/others'
-    | '/projects/residential'
+    | '/projects/'
     | '/projects/$category/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -118,9 +97,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/people'
     | '/projects'
-    | '/projects/commercial'
-    | '/projects/others'
-    | '/projects/residential'
     | '/projects/$category/$slug'
   id:
     | '__root__'
@@ -129,9 +105,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/people'
     | '/projects'
-    | '/projects/commercial'
-    | '/projects/others'
-    | '/projects/residential'
+    | '/projects/'
     | '/projects/$category/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -180,25 +154,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/projects/residential': {
-      id: '/projects/residential'
-      path: '/residential'
-      fullPath: '/projects/residential'
-      preLoaderRoute: typeof ProjectsResidentialRouteImport
-      parentRoute: typeof ProjectsRoute
-    }
-    '/projects/others': {
-      id: '/projects/others'
-      path: '/others'
-      fullPath: '/projects/others'
-      preLoaderRoute: typeof ProjectsOthersRouteImport
-      parentRoute: typeof ProjectsRoute
-    }
-    '/projects/commercial': {
-      id: '/projects/commercial'
-      path: '/commercial'
-      fullPath: '/projects/commercial'
-      preLoaderRoute: typeof ProjectsCommercialRouteImport
+    '/projects/': {
+      id: '/projects/'
+      path: '/'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof ProjectsIndexRouteImport
       parentRoute: typeof ProjectsRoute
     }
     '/projects/$category/$slug': {
@@ -212,16 +172,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface ProjectsRouteChildren {
-  ProjectsCommercialRoute: typeof ProjectsCommercialRoute
-  ProjectsOthersRoute: typeof ProjectsOthersRoute
-  ProjectsResidentialRoute: typeof ProjectsResidentialRoute
+  ProjectsIndexRoute: typeof ProjectsIndexRoute
   ProjectsCategorySlugRoute: typeof ProjectsCategorySlugRoute
 }
 
 const ProjectsRouteChildren: ProjectsRouteChildren = {
-  ProjectsCommercialRoute: ProjectsCommercialRoute,
-  ProjectsOthersRoute: ProjectsOthersRoute,
-  ProjectsResidentialRoute: ProjectsResidentialRoute,
+  ProjectsIndexRoute: ProjectsIndexRoute,
   ProjectsCategorySlugRoute: ProjectsCategorySlugRoute,
 }
 

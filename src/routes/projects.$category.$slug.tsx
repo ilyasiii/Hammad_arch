@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { projectsByCategory, categoryLabel } from "@/lib/projects-data";
@@ -24,24 +24,38 @@ export const Route = createFileRoute("/projects/$category/$slug")({
 
 function ProjectDetail() {
   const { category, slug } = Route.useParams();
+  const router = useRouter();
   const list = projectsByCategory[category];
   if (!list) throw notFound();
   const project = list.find((p) => p.slug === slug);
   if (!project) throw notFound();
+
+  const goBack = () => {
+    // If the user landed here directly (no history), fall back to /projects.
+    if (window.history.length > 1) {
+      router.history.back();
+    } else {
+      router.navigate({ to: "/projects", search: { cat: category } as never });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
 
       <section className="mx-auto max-w-[1400px] px-6 pt-32 pb-10 md:px-10">
-        <Link
-          to={("/projects/" + category) as "/projects/commercial"}
+        <button
+          type="button"
+          onClick={goBack}
           className="font-label text-muted-foreground hover:text-foreground"
         >
           ← {categoryLabel[category] ?? category}
-        </Link>
+        </button>
         <h1 className="font-display mt-6 text-4xl md:text-6xl">{project.title}</h1>
-        <p className="mt-2 text-muted-foreground italic">{project.place} · {project.year}</p>
+        <p className="mt-2 text-muted-foreground italic">
+          {project.place}
+          {project.year ? ` · ${project.year}` : ""}
+        </p>
         <p className="mt-6 max-w-2xl text-foreground/80">{project.description}</p>
       </section>
 
