@@ -17,10 +17,17 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-6 md:px-10">
         <Link
           to="/"
-          className="font-display text-xl leading-none"
+          className="flex items-center gap-2 font-display text-xl leading-none"
           onClick={() => setOpen(false)}
         >
-          Ph. G <span className="text-clay italic">studio</span>
+          <img
+            src="/logo.jpeg"
+            alt="Ph. G studio logo"
+            className="h-9 w-9 rounded-sm object-cover"
+          />
+          <span>
+            Ph. G <span className="text-clay italic">studio</span>
+          </span>
         </Link>
 
         {/* Desktop / tablet nav */}

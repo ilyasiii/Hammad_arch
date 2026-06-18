@@ -3,9 +3,16 @@ export function SiteFooter() {
     <footer className="mt-24 bg-ink text-cream">
       <div className="mx-auto flex max-w-[1600px] flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between md:px-10">
         <div>
-          <p className="font-display text-2xl">
-            Ph.G <span className="text-clay italic">Studio</span>
-          </p>
+          <div className="flex items-center gap-3">
+            <img
+              src="/logo.jpeg"
+              alt="Ph. G studio logo"
+              className="h-10 w-10 rounded-sm object-cover"
+            />
+            <p className="font-display text-2xl">
+              Ph.G <span className="text-clay italic">Studio</span>
+            </p>
+          </div>
           <p className="font-label mt-2 text-cream/50">
             © 2026 Architecture shaped through Perception, Human, Pause &amp; Geometry
           </p>
