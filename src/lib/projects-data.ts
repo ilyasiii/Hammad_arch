@@ -28,6 +28,24 @@ export const projectsByCategory: Record<string, Project[]> = {
         "/projects/commercial/artisanbakery/a5.jpeg",
       ],
     },
+    {
+      slug: "arena-fitness-club",
+      title: "Arena Fitness Club",
+      place: "Commercial Interior",
+      year: "",
+      blurb: "An industrial, rusty fitness interior in Parachinar City.",
+      description:
+        "A commercial interior for Arena Fitness Club, located in Parachinar City. The space is shaped around an industrial and rusty design language, with a palette of brown, gray and white tones tying floor, structure and lighting into a single grounded atmosphere.",
+      cover: "/projects/commercial/arenafitness/2.png",
+      gallery: [
+        "/projects/commercial/arenafitness/2.png",
+        "/projects/commercial/arenafitness/5.png",
+        "/projects/commercial/arenafitness/9.png",
+        "/projects/commercial/arenafitness/10.png",
+        "/projects/commercial/arenafitness/11.png",
+        "/projects/commercial/arenafitness/12.png",
+      ],
+    },
   ],
   residential: [
     {
