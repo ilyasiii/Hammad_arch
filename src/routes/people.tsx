@@ -19,7 +19,7 @@ const team = [
   { role: "Senior Architect", name: "Ar. Syed Faraz Ali", photo: "" },
   { role: "Junior Architect", name: "Ar. Munazah Babar", photo: "/team/munazah.jpeg" },
   { role: "Junior Architect", name: "Ar. Zeeshan Haider", photo: "/team/zeeshan-haider.jpeg" },
-  { role: "Junior Architect", name: "Ar. Yadullah", photo: "" },
+  { role: "Junior Architect", name: "Ar. Sayed Yadullah", photo: "" },
   { role: "Managing Director", name: "Muhammad Ilyas", photo: "/team/muhammad-ilyas.jpg" },
   { role: "Media Director", name: "Qammar Abbas", photo: "/team/qammar.jpg" },
 ];

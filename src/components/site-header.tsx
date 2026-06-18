@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 
 const NAV_LINKS = [
+  { to: "/thinking", label: "Thinking" },
   { to: "/projects", label: "Projects" },
   { to: "/about", label: "About" },
   { to: "/people", label: "People" },
-  { to: "/thinking", label: "Thinking" },
   { to: "/contact", label: "Contact" },
 ] as const;
 

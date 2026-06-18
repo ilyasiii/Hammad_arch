@@ -8,10 +8,10 @@ const categories = [
   "commercial",
   "residential",
   "others",
-  "logo-branding",
+  "urban-planning",
   "landscape",
+  "logo-branding",
   "ai-visualization",
-  "water-color",
 ] as const;
 type Cat = (typeof categories)[number];
 
@@ -35,10 +35,10 @@ const tabLabel: Record<Cat, string> = {
   commercial: "Commercial",
   residential: "Residential",
   others: "Institutional",
-  "logo-branding": "Logo & Branding",
+  "urban-planning": "Urban Planning",
   landscape: "Landscape",
+  "logo-branding": "Logo & Branding",
   "ai-visualization": "AI Visualization",
-  "water-color": "Water Color",
 };
 
 function ProjectsIndex() {

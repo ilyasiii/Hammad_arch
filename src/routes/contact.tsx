@@ -48,8 +48,9 @@ function Contact() {
           email,
           phone,
           message: msg,
-          // honeypot — bots will fill this and get silently dropped by Web3Forms
-          botcheck: "",
+          // honeypot: real users leave this empty; bots fill the hidden input
+          // in the form and Web3Forms drops the submission.
+          botcheck: String(data.get("botcheck") ?? ""),
         }),
       });
 

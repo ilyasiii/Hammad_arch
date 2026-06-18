@@ -137,7 +137,11 @@ function Index() {
       <section className="hairline mx-auto max-w-[1600px] px-6 py-20 md:px-10">
         <div className="flex items-end justify-between">
           <p className="font-label text-muted-foreground">§ Selected Work</p>
-          <Link to="/projects" className="font-label text-muted-foreground hover:text-clay">
+          <Link
+            to="/projects"
+            search={{ cat: "all" }}
+            className="font-label text-muted-foreground hover:text-clay"
+          >
             All projects →
           </Link>
         </div>

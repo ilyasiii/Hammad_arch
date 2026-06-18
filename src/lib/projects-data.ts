@@ -126,10 +126,10 @@ export const projectsByCategory: Record<string, Project[]> = {
       ],
     },
   ],
-  "logo-branding": [],
+  "urban-planning": [],
   landscape: [],
+  "logo-branding": [],
   "ai-visualization": [],
-  "water-color": [],
 };
 
 export const categoryLabel: Record<string, string> = {
