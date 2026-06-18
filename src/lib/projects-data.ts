@@ -126,6 +126,10 @@ export const projectsByCategory: Record<string, Project[]> = {
       ],
     },
   ],
+  "logo-branding": [],
+  landscape: [],
+  "ai-visualization": [],
+  "water-color": [],
 };
 
 export const categoryLabel: Record<string, string> = {

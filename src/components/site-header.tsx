@@ -30,6 +30,13 @@ export function SiteHeader() {
             People
           </Link>
           <Link
+            to="/thinking"
+            className="font-label text-foreground/70 transition-colors hover:text-accent"
+            activeProps={{ className: "font-label text-accent" }}
+          >
+            Thinking
+          </Link>
+          <Link
             to="/contact"
             className="font-label text-foreground/70 transition-colors hover:text-accent"
             activeProps={{ className: "font-label text-accent" }}

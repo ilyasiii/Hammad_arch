@@ -3,7 +3,16 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { projectsByCategory } from "@/lib/projects-data";
 
-const categories = ["all", "commercial", "residential", "others"] as const;
+const categories = [
+  "all",
+  "commercial",
+  "residential",
+  "others",
+  "logo-branding",
+  "landscape",
+  "ai-visualization",
+  "water-color",
+] as const;
 type Cat = (typeof categories)[number];
 
 export const Route = createFileRoute("/projects/")({
@@ -26,6 +35,10 @@ const tabLabel: Record<Cat, string> = {
   commercial: "Commercial",
   residential: "Residential",
   others: "Institutional",
+  "logo-branding": "Logo & Branding",
+  landscape: "Landscape",
+  "ai-visualization": "AI Visualization",
+  "water-color": "Water Color",
 };
 
 function ProjectsIndex() {
@@ -38,12 +51,12 @@ function ProjectsIndex() {
 
   const visible =
     active === "all"
-      ? [
-          ...projectsByCategory.commercial.map((p) => ({ p, cat: "commercial" as const })),
-          ...projectsByCategory.residential.map((p) => ({ p, cat: "residential" as const })),
-          ...projectsByCategory.others.map((p) => ({ p, cat: "others" as const })),
-        ]
-      : projectsByCategory[active].map((p) => ({ p, cat: active as "commercial" | "residential" | "others" }));
+      ? categories
+          .filter((c): c is Exclude<Cat, "all"> => c !== "all")
+          .flatMap((c) =>
+            (projectsByCategory[c] ?? []).map((p) => ({ p, cat: c })),
+          )
+      : (projectsByCategory[active] ?? []).map((p) => ({ p, cat: active as Exclude<Cat, "all"> }));
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -86,6 +99,12 @@ function ProjectsIndex() {
             </Link>
           ))}
         </div>
+
+        {visible.length === 0 && (
+          <p className="font-label text-muted-foreground mt-8">
+            ✶ New work coming soon.
+          </p>
+        )}
       </div>
 
       <SiteFooter />

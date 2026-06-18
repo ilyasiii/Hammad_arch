@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ThinkingRouteImport } from './routes/thinking'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PeopleRouteImport } from './routes/people'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as ProjectsCategorySlugRouteImport } from './routes/projects.$category.$slug'
 
+const ThinkingRoute = ThinkingRouteImport.update({
+  id: '/thinking',
+  path: '/thinking',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/people': typeof PeopleRoute
   '/projects': typeof ProjectsRouteWithChildren
+  '/thinking': typeof ThinkingRoute
   '/projects/': typeof ProjectsIndexRoute
   '/projects/$category/$slug': typeof ProjectsCategorySlugRoute
 }
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/people': typeof PeopleRoute
+  '/thinking': typeof ThinkingRoute
   '/projects': typeof ProjectsIndexRoute
   '/projects/$category/$slug': typeof ProjectsCategorySlugRoute
 }
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/people': typeof PeopleRoute
   '/projects': typeof ProjectsRouteWithChildren
+  '/thinking': typeof ThinkingRoute
   '/projects/': typeof ProjectsIndexRoute
   '/projects/$category/$slug': typeof ProjectsCategorySlugRoute
 }
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/people'
     | '/projects'
+    | '/thinking'
     | '/projects/'
     | '/projects/$category/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/people'
+    | '/thinking'
     | '/projects'
     | '/projects/$category/$slug'
   id:
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/people'
     | '/projects'
+    | '/thinking'
     | '/projects/'
     | '/projects/$category/$slug'
   fileRoutesById: FileRoutesById
@@ -115,10 +127,18 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   PeopleRoute: typeof PeopleRoute
   ProjectsRoute: typeof ProjectsRouteWithChildren
+  ThinkingRoute: typeof ThinkingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/thinking': {
+      id: '/thinking'
+      path: '/thinking'
+      fullPath: '/thinking'
+      preLoaderRoute: typeof ThinkingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects': {
       id: '/projects'
       path: '/projects'
@@ -191,6 +211,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   PeopleRoute: PeopleRoute,
   ProjectsRoute: ProjectsRouteWithChildren,
+  ThinkingRoute: ThinkingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
