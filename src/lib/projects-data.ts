@@ -35,11 +35,13 @@ export const projectsByCategory: Record<string, Project[]> = {
       year: "",
       blurb: "An industrial, rusty fitness interior in Parachinar City.",
       description:
-        "A commercial interior for Arena Fitness Club, located in Parachinar City. The space is shaped around an industrial and rusty design language, with a palette of brown, gray and white tones tying floor, structure and lighting into a single grounded atmosphere.",
+        "A commercial interior for Arena Fitness Club, located in Parachinar City. The space is shaped around an industrial and rusty design language, with a palette of brown, gray and black tones tying floor, structure and lighting into a single grounded atmosphere.",
       cover: "/projects/commercial/arenafitness/2.png",
       gallery: [
         "/projects/commercial/arenafitness/2.png",
+        "/projects/commercial/arenafitness/4.jpeg",
         "/projects/commercial/arenafitness/5.png",
+        "/projects/commercial/arenafitness/6.jpeg",
         "/projects/commercial/arenafitness/9.png",
         "/projects/commercial/arenafitness/10.png",
         "/projects/commercial/arenafitness/11.png",
