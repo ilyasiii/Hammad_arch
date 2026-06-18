@@ -21,7 +21,7 @@ const team = [
   { role: "Junior Architect", name: "Ar. Zeeshan Haider", photo: "/team/zeeshan-haider.jpeg" },
   { role: "Junior Architect", name: "Ar. Yadullah", photo: "" },
   { role: "Managing Director", name: "Muhammad Ilyas", photo: "/team/muhammad-ilyas.jpg" },
-  { role: "Media Director", name: "Qammar Abbas", photo: "" },
+  { role: "Media Director", name: "Qammar Abbas", photo: "/team/qammar.jpg" },
 ];
 
 function People() {

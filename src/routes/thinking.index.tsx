@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { thinkingProjects } from "@/lib/thinking-data";
+import { thinkingProjects, thinkingPdfs } from "@/lib/thinking-data";
 
 export const Route = createFileRoute("/thinking/")({
   head: () => ({
@@ -27,7 +27,7 @@ function ThinkingIndex() {
         </h1>
       </section>
 
-      <section className="mx-auto max-w-[1600px] px-6 pb-32 md:px-10">
+      <section className="mx-auto max-w-[1600px] px-6 pb-20 md:px-10">
         <div className="grid grid-cols-1 gap-x-8 gap-y-14 border-t border-border pt-12 md:grid-cols-2">
           {thinkingProjects.map((t) => (
             <Link
@@ -50,6 +50,31 @@ function ThinkingIndex() {
           ))}
         </div>
       </section>
+
+      {thinkingPdfs.length > 0 && (
+        <section className="mx-auto max-w-[1600px] px-6 pb-32 md:px-10">
+          <div className="border-t border-border pt-10">
+            <p className="font-label text-clay">§ Writings</p>
+            <ul className="mt-6 divide-y divide-border">
+              {thinkingPdfs.map((pdf) => (
+                <li key={pdf.href}>
+                  <a
+                    href={pdf.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-display group flex items-center justify-between py-5 text-2xl text-foreground hover:text-clay md:text-3xl"
+                  >
+                    <span>{pdf.title}</span>
+                    <span className="font-label text-base text-muted-foreground transition-colors group-hover:text-clay">
+                      Open PDF →
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <SiteFooter />
     </div>

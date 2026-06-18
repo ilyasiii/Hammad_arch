@@ -18,6 +18,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ThinkingIndexRouteImport } from './routes/thinking.index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as ThinkingSlugRouteImport } from './routes/thinking.$slug'
+import { Route as ThinkingSlugIndexRouteImport } from './routes/thinking.$slug.index'
+import { Route as ThinkingSlugSubRouteImport } from './routes/thinking.$slug.$sub'
 import { Route as ProjectsCategorySlugRouteImport } from './routes/projects.$category.$slug'
 
 const ThinkingRoute = ThinkingRouteImport.update({
@@ -65,6 +67,16 @@ const ThinkingSlugRoute = ThinkingSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ThinkingRoute,
 } as any)
+const ThinkingSlugIndexRoute = ThinkingSlugIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ThinkingSlugRoute,
+} as any)
+const ThinkingSlugSubRoute = ThinkingSlugSubRouteImport.update({
+  id: '/$sub',
+  path: '/$sub',
+  getParentRoute: () => ThinkingSlugRoute,
+} as any)
 const ProjectsCategorySlugRoute = ProjectsCategorySlugRouteImport.update({
   id: '/$category/$slug',
   path: '/$category/$slug',
@@ -78,20 +90,23 @@ export interface FileRoutesByFullPath {
   '/people': typeof PeopleRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/thinking': typeof ThinkingRouteWithChildren
-  '/thinking/$slug': typeof ThinkingSlugRoute
+  '/thinking/$slug': typeof ThinkingSlugRouteWithChildren
   '/projects/': typeof ProjectsIndexRoute
   '/thinking/': typeof ThinkingIndexRoute
   '/projects/$category/$slug': typeof ProjectsCategorySlugRoute
+  '/thinking/$slug/$sub': typeof ThinkingSlugSubRoute
+  '/thinking/$slug/': typeof ThinkingSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/people': typeof PeopleRoute
-  '/thinking/$slug': typeof ThinkingSlugRoute
   '/projects': typeof ProjectsIndexRoute
   '/thinking': typeof ThinkingIndexRoute
   '/projects/$category/$slug': typeof ProjectsCategorySlugRoute
+  '/thinking/$slug/$sub': typeof ThinkingSlugSubRoute
+  '/thinking/$slug': typeof ThinkingSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -101,10 +116,12 @@ export interface FileRoutesById {
   '/people': typeof PeopleRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/thinking': typeof ThinkingRouteWithChildren
-  '/thinking/$slug': typeof ThinkingSlugRoute
+  '/thinking/$slug': typeof ThinkingSlugRouteWithChildren
   '/projects/': typeof ProjectsIndexRoute
   '/thinking/': typeof ThinkingIndexRoute
   '/projects/$category/$slug': typeof ProjectsCategorySlugRoute
+  '/thinking/$slug/$sub': typeof ThinkingSlugSubRoute
+  '/thinking/$slug/': typeof ThinkingSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -119,16 +136,19 @@ export interface FileRouteTypes {
     | '/projects/'
     | '/thinking/'
     | '/projects/$category/$slug'
+    | '/thinking/$slug/$sub'
+    | '/thinking/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/contact'
     | '/people'
-    | '/thinking/$slug'
     | '/projects'
     | '/thinking'
     | '/projects/$category/$slug'
+    | '/thinking/$slug/$sub'
+    | '/thinking/$slug'
   id:
     | '__root__'
     | '/'
@@ -141,6 +161,8 @@ export interface FileRouteTypes {
     | '/projects/'
     | '/thinking/'
     | '/projects/$category/$slug'
+    | '/thinking/$slug/$sub'
+    | '/thinking/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -217,6 +239,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ThinkingSlugRouteImport
       parentRoute: typeof ThinkingRoute
     }
+    '/thinking/$slug/': {
+      id: '/thinking/$slug/'
+      path: '/'
+      fullPath: '/thinking/$slug/'
+      preLoaderRoute: typeof ThinkingSlugIndexRouteImport
+      parentRoute: typeof ThinkingSlugRoute
+    }
+    '/thinking/$slug/$sub': {
+      id: '/thinking/$slug/$sub'
+      path: '/$sub'
+      fullPath: '/thinking/$slug/$sub'
+      preLoaderRoute: typeof ThinkingSlugSubRouteImport
+      parentRoute: typeof ThinkingSlugRoute
+    }
     '/projects/$category/$slug': {
       id: '/projects/$category/$slug'
       path: '/$category/$slug'
@@ -241,13 +277,27 @@ const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
   ProjectsRouteChildren,
 )
 
+interface ThinkingSlugRouteChildren {
+  ThinkingSlugSubRoute: typeof ThinkingSlugSubRoute
+  ThinkingSlugIndexRoute: typeof ThinkingSlugIndexRoute
+}
+
+const ThinkingSlugRouteChildren: ThinkingSlugRouteChildren = {
+  ThinkingSlugSubRoute: ThinkingSlugSubRoute,
+  ThinkingSlugIndexRoute: ThinkingSlugIndexRoute,
+}
+
+const ThinkingSlugRouteWithChildren = ThinkingSlugRoute._addFileChildren(
+  ThinkingSlugRouteChildren,
+)
+
 interface ThinkingRouteChildren {
-  ThinkingSlugRoute: typeof ThinkingSlugRoute
+  ThinkingSlugRoute: typeof ThinkingSlugRouteWithChildren
   ThinkingIndexRoute: typeof ThinkingIndexRoute
 }
 
 const ThinkingRouteChildren: ThinkingRouteChildren = {
-  ThinkingSlugRoute: ThinkingSlugRoute,
+  ThinkingSlugRoute: ThinkingSlugRouteWithChildren,
   ThinkingIndexRoute: ThinkingIndexRoute,
 }
 
