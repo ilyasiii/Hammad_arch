@@ -17,7 +17,7 @@ export const Route = createFileRoute("/people")({
 const team = [
   { role: "Principal Architect", name: "Ar. Hammad Hussain", photo: "/team/hammad.jpeg" },
   { role: "Senior Architect", name: "Ar. Syed Faraz Ali", photo: "/team/faraz.png" },
-  { role: "Junior Architect", name: "Ar. Munazah Babar", photo: "/team/munazah.jpeg" },
+  { role: "Junior Architect", name: "Ar. Munazza Baber", photo: "/team/munazah.jpeg" },
   { role: "Junior Architect", name: "Ar. Zeeshan Haider", photo: "/team/zeeshan-haider.jpeg" },
   { role: "Junior Architect", name: "Ar. Sayed Yadullah", photo: "/team/yadullah.png" },
   { role: "Media Director", name: "Qammar Abbas", photo: "/team/qammar.jpg" },
