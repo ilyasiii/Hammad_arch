@@ -125,6 +125,23 @@ export const projectsByCategory: Record<string, Project[]> = {
         "/projects/institutional/un_maincourt/u5.jpeg",
       ],
     },
+    {
+      slug: "art-gallery",
+      title: "Art Gallery",
+      place: "Institutional",
+      year: "",
+      blurb: "An institutional art gallery shaped around light and procession.",
+      description:
+        "An institutional project developed for an art gallery. The plates explore how daylight, circulation and proportion are tuned to the experience of viewing work.",
+      cover: "/projects/institutional/artgallery/1.jpeg",
+      gallery: [
+        "/projects/institutional/artgallery/1.jpeg",
+        "/projects/institutional/artgallery/2.jpeg",
+        "/projects/institutional/artgallery/3.jpeg",
+        "/projects/institutional/artgallery/4.jpeg",
+        "/projects/institutional/artgallery/5.jpeg",
+      ],
+    },
   ],
   "urban-planning": [],
   landscape: [],

@@ -32,8 +32,9 @@ export const thinkingProjects: ThinkingProject[] = [
       {
         slug: "special-planning",
         title: "Special Planning",
-        cover: "/Thinking/sacredgeometry/t18.png",
+        cover: "/Thinking/sacredgeometry/s4.png",
         gallery: [
+          "/Thinking/sacredgeometry/s4.png",
           "/Thinking/sacredgeometry/t1.jpeg",
           "/Thinking/sacredgeometry/t15.png",
           "/Thinking/sacredgeometry/t16.png",
