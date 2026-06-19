@@ -129,11 +129,31 @@ export const projectsByCategory: Record<string, Project[]> = {
   "urban-planning": [],
   landscape: [],
   "logo-branding": [],
-  "ai-visualization": [],
+  "ai-visualization": [
+    {
+      slug: "ai-visualization-studies",
+      title: "AI Visualization Studies",
+      place: "AI Visualization",
+      year: "",
+      blurb: "AI-driven visual studies exploring atmosphere, form and material.",
+      description:
+        "A set of AI-assisted visualization studies produced by the studio. Each plate explores a different combination of atmosphere, light, and material — used as a thinking tool alongside our drawings.",
+      cover: "/projects/ai_visualization/1.jpeg",
+      gallery: [
+        "/projects/ai_visualization/1.jpeg",
+        "/projects/ai_visualization/2.jpeg",
+        "/projects/ai_visualization/3.jpeg",
+        "/projects/ai_visualization/4.jpeg",
+        "/projects/ai_visualization/5.jpeg",
+        "/projects/ai_visualization/6.jpeg",
+      ],
+    },
+  ],
 };
 
 export const categoryLabel: Record<string, string> = {
   commercial: "Commercial",
   residential: "Residential",
   others: "Institutional",
+  "ai-visualization": "AI Visualization",
 };
