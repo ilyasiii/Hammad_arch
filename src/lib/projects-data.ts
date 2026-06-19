@@ -166,6 +166,29 @@ export const projectsByCategory: Record<string, Project[]> = {
       ],
     },
   ],
+  "culture-gathering": [
+    {
+      slug: "culture-and-gathering",
+      title: "Culture & Gathering",
+      place: "Culture & Gathering",
+      year: "",
+      blurb: "Spaces for community, ritual and shared experience.",
+      description:
+        "A studio investigation into spaces of culture and gathering — including the Saregama Karwan and Taqreeban proposals, master plans, and isometric studies that situate ritual, community and performance within a shared spatial language.",
+      cover: "/projects/cultureandgathering/1.png",
+      gallery: [
+        "/projects/cultureandgathering/1.png",
+        "/projects/cultureandgathering/2.png",
+        "/projects/cultureandgathering/3.png",
+        "/projects/cultureandgathering/4.png",
+        "/projects/cultureandgathering/saregama%20karwan.png",
+        "/projects/cultureandgathering/taqreeban.png",
+        "/projects/cultureandgathering/masterpplan.png",
+        "/projects/cultureandgathering/plan.png",
+        "/projects/cultureandgathering/iso-%20metric%20view.png",
+      ],
+    },
+  ],
 };
 
 export const categoryLabel: Record<string, string> = {
@@ -173,4 +196,5 @@ export const categoryLabel: Record<string, string> = {
   residential: "Residential",
   others: "Institutional",
   "ai-visualization": "AI Visualization",
+  "culture-gathering": "Culture & Gathering",
 };

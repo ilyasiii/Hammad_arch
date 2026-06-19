@@ -102,9 +102,9 @@ export const thinkingProjects: ThinkingProject[] = [
         gallery: Array.from({ length: 7 }, (_, i) => `/Thinking/brainstorming/2/${i + 1}.jpeg`),
       },
       {
-        slug: "collection-3",
-        title: "Collection 3",
-        cover: "/Thinking/brainstorming/3/1.jpeg",
+        slug: "villages-are-converting-into-cities",
+        title: "Villages are Converting into Cities",
+        cover: "/Thinking/brainstorming/3/7.jpeg",
         gallery: Array.from({ length: 11 }, (_, i) => `/Thinking/brainstorming/3/${i + 1}.jpeg`),
       },
     ],

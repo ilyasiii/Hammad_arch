@@ -12,6 +12,7 @@ const categories = [
   "landscape",
   "logo-branding",
   "ai-visualization",
+  "culture-gathering",
 ] as const;
 type Cat = (typeof categories)[number];
 
@@ -39,6 +40,7 @@ const tabLabel: Record<Cat, string> = {
   landscape: "Landscape",
   "logo-branding": "Logo & Branding",
   "ai-visualization": "AI Visualization",
+  "culture-gathering": "Culture & Gathering",
 };
 
 function ProjectsIndex() {
