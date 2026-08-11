@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { assetUrl } from "@/lib/assets";
 import { thinkingProjects } from "@/lib/thinking-data";
 
 export const Route = createFileRoute("/thinking/$slug/")({
@@ -63,7 +64,7 @@ function ThinkingProjectIndex() {
             >
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 <img
-                  src={c.cover}
+                  src={assetUrl(c.cover)}
                   alt={c.title}
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"

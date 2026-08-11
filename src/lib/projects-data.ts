@@ -1,3 +1,16 @@
+// Paths below are RAW on-disk paths under public/ — never pre-encoded here.
+// Render sites wrap them in assetUrl() (src/lib/assets.ts).
+
+export type ProjectSection = {
+  title: string;
+  images: string[];
+};
+
+export type ProjectCompare = {
+  before: ProjectSection;
+  after: ProjectSection;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -6,7 +19,44 @@ export type Project = {
   blurb: string;
   description: string;
   cover: string;
-  gallery: string[];
+  /** Flat gallery. Rendered after `compare` and `sections` when present. */
+  gallery?: string[];
+  /** Named groups of plates, each with its own heading. */
+  sections?: ProjectSection[];
+  /** Side-by-side before/after columns (e.g. existing vs proposed). */
+  compare?: ProjectCompare;
+  /**
+   * "crop"    — uniform 4:3 grid, images cropped to fill (default; photography).
+   * "natural" — masonry, full image, never cropped (plans, sections, drawings).
+   */
+  display?: "crop" | "natural";
+};
+
+// Order here is the order of the filter tabs on /projects.
+export const categories = [
+  "all",
+  "commercial",
+  "residential",
+  "others",
+  "special-planning",
+  "urban-planning",
+  "fashion",
+  "landscape",
+  "logo-branding",
+] as const;
+
+export type Cat = (typeof categories)[number];
+
+export const categoryLabel: Record<string, string> = {
+  all: "All",
+  commercial: "Commercial",
+  residential: "Residential",
+  others: "Institutional",
+  "special-planning": "Special Planning",
+  "urban-planning": "Urban Planning",
+  fashion: "Fashion",
+  landscape: "Landscape",
+  "logo-branding": "Logo & Branding",
 };
 
 export const projectsByCategory: Record<string, Project[]> = {
@@ -143,58 +193,281 @@ export const projectsByCategory: Record<string, Project[]> = {
       ],
     },
   ],
-  "urban-planning": [],
+  "special-planning": [
+    {
+      slug: "sacred-geometry",
+      title: "Sacred Geometry",
+      place: "Special Planning",
+      year: "",
+      blurb: "Geometry as a generative language for inhabited space.",
+      description:
+        "A studio investigation into proportion, symmetry, and the underlying geometric patterns that organise architecture — from the scale of a single room to a village fabric.",
+      cover: "/projects/specialplanning/sacredgeometry/backdesign/s4.png",
+      display: "natural",
+      gallery: [
+        "/projects/specialplanning/sacredgeometry/backdesign/s4.png",
+        "/projects/specialplanning/sacredgeometry/backdesign/t1.jpeg",
+        "/projects/specialplanning/sacredgeometry/backdesign/t6.jpeg",
+        "/projects/specialplanning/sacredgeometry/backdesign/t15.png",
+        "/projects/specialplanning/sacredgeometry/backdesign/t16.png",
+        "/projects/specialplanning/sacredgeometry/backdesign/t17.png",
+        "/projects/specialplanning/sacredgeometry/backdesign/t18.png",
+        "/projects/specialplanning/sacredgeometry/backdesign/t19.png",
+        "/projects/specialplanning/sacredgeometry/backdesign/t20.png",
+        "/projects/specialplanning/sacredgeometry/backdesign/s2.jpeg",
+        "/projects/specialplanning/sacredgeometry/backdesign/s3.jpeg",
+      ],
+    },
+    {
+      slug: "the-intellectual-spine",
+      title: "The Intellectual Spine",
+      place: "Special Planning",
+      year: "",
+      blurb: "Modular studies of bridges and undergrounds along a shared spine.",
+      description:
+        "A modular exploration organised along a single spine — studying how repeating geometric units assemble into bridges above and circulation below, and how the two register against one another.",
+      cover: "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m1.jpeg",
+      display: "natural",
+      sections: [
+        {
+          title: "Bridges",
+          images: [
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m1.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m2.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m3.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m4.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m5.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m6.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m7.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m8.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m9.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m10.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m11.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m12.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/s1.jpeg",
+          ],
+        },
+        {
+          title: "Underground",
+          images: [
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t2.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t3.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t4.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t5.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t7.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t8.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t9.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t10.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t11.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t12.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t13.jpeg",
+            "/projects/specialplanning/sacredgeometry/theintelectualspine/underground/t14.jpeg",
+          ],
+        },
+      ],
+    },
+  ],
+  "urban-planning": [
+    {
+      slug: "panahgah",
+      title: "Panahgah",
+      place: "Urban Planning",
+      year: "",
+      blurb: "A shelter proposal read at the scale of the city block.",
+      description:
+        "An urban proposal for Panahgah — a place of shelter. The plates move from master plan and detail plans through exploded axonometrics and sections to the spatial views that test the proposal at eye level.",
+      cover: "/projects/urban/panahgah/PANAHGAH FINAL PRE.jpg",
+      display: "natural",
+      gallery: [
+        "/projects/urban/panahgah/PANAHGAH FINAL PRE.jpg",
+        "/projects/urban/panahgah/MASTER PLAN.jpg",
+        "/projects/urban/panahgah/MASTTTTTTTTTTT.png",
+        "/projects/urban/panahgah/detail plan.png",
+        "/projects/urban/panahgah/EXPLODED AXONOMO.png",
+        "/projects/urban/panahgah/{3D}.jpg",
+        "/projects/urban/panahgah/HAMMAD 1.jpg",
+        "/projects/urban/panahgah/HA 2.jpg",
+        "/projects/urban/panahgah/HA 3.jpg",
+        "/projects/urban/panahgah/HA 4.jpg",
+        "/projects/urban/panahgah/HA 5[1].jpg",
+        "/projects/urban/panahgah/HA 6.jpg",
+        "/projects/urban/panahgah/HA 7.jpg",
+        "/projects/urban/panahgah/HA 8.jpg",
+        "/projects/urban/panahgah/HA 9.jpg",
+        "/projects/urban/panahgah/HAAAA13.jpg",
+        "/projects/urban/panahgah/HAAAA  14.jpg",
+        "/projects/urban/panahgah/HAM 15.jpg",
+        "/projects/urban/panahgah/HAMM 16.jpg",
+        "/projects/urban/panahgah/HAA 19.jpg",
+        "/projects/urban/panahgah/GHGHGH.png",
+        "/projects/urban/panahgah/RTRTRTRETETET.png",
+        "/projects/urban/panahgah/AASASASASASASA.jpg",
+        "/projects/urban/panahgah/HAHAAHHAAHAAH.jpg",
+        "/projects/urban/panahgah/huuuu.jpg",
+        "/projects/urban/panahgah/1131313.jpg",
+        "/projects/urban/panahgah/121212121.jpg",
+        "/projects/urban/panahgah/12121212122131324.jpg",
+      ],
+    },
+    {
+      slug: "pedestrianizing-anarkali",
+      title: "Pedestrianizing Anarkali",
+      place: "Urban Planning",
+      year: "",
+      blurb: "Anarkali's foot street, read as existing condition and proposal.",
+      description:
+        "An urban study of Anarkali that pedestrianises the foot street. The drawings are set out as a direct comparison — the existing condition on one side, the proposed intervention on the other — across plan, axonometric, section and the street-level electrical system.",
+      cover: "/projects/urban/pedestrianzing_anarkali/proposed/1.png",
+      display: "natural",
+      compare: {
+        before: {
+          title: "Existing",
+          images: [
+            "/projects/urban/pedestrianzing_anarkali/existing/existing plan.png",
+            "/projects/urban/pedestrianzing_anarkali/existing/axo.png",
+            "/projects/urban/pedestrianzing_anarkali/existing/kocho.png",
+            "/projects/urban/pedestrianzing_anarkali/existing/electric systrem in anarkali foot street vs proposal.png",
+            "/projects/urban/pedestrianzing_anarkali/existing/isoooooo.png",
+            "/projects/urban/pedestrianzing_anarkali/existing/view 1.png",
+            "/projects/urban/pedestrianzing_anarkali/existing/21.png",
+            "/projects/urban/pedestrianzing_anarkali/existing/7.png",
+            "/projects/urban/pedestrianzing_anarkali/existing/vfebetb egbvw ad.png",
+            "/projects/urban/pedestrianzing_anarkali/existing/WhatsApp Image 2024-05-30 at 07.54.58_cec1b120.jpg",
+          ],
+        },
+        after: {
+          title: "Proposed",
+          images: [
+            "/projects/urban/pedestrianzing_anarkali/proposed/proposal plan.png",
+            "/projects/urban/pedestrianzing_anarkali/proposed/axoooooooo aftrt.png",
+            "/projects/urban/pedestrianzing_anarkali/proposed/pocho.png",
+            "/projects/urban/pedestrianzing_anarkali/proposed/electric systrem in anarkali foot street.jpg",
+            "/projects/urban/pedestrianzing_anarkali/proposed/1.png",
+            "/projects/urban/pedestrianzing_anarkali/proposed/2.png",
+            "/projects/urban/pedestrianzing_anarkali/proposed/3.png",
+            "/projects/urban/pedestrianzing_anarkali/proposed/4.png",
+            "/projects/urban/pedestrianzing_anarkali/proposed/gfrvgdvgsv.png",
+            "/projects/urban/pedestrianzing_anarkali/proposed/sec.png",
+            "/projects/urban/pedestrianzing_anarkali/proposed/sec blow up.png",
+          ],
+        },
+      },
+    },
+    {
+      slug: "reimaging-co-existance",
+      title: "Reimaging Co Existance",
+      place: "Urban Planning",
+      year: "",
+      blurb: "A master plan where agriculture, livestock and workshop co-exist.",
+      description:
+        "An urban proposal that reimagines co-existence between productive landscapes and settlement. The master plans and axonometric models set agriculture, livestock, textile and workshop programmes alongside the shared centre and its parking.",
+      cover: "/projects/urban/reimaging co existance/masterplan.png",
+      display: "natural",
+      gallery: [
+        "/projects/urban/reimaging co existance/masterplan.png",
+        "/projects/urban/reimaging co existance/MASTEER PLEEN.jpg",
+        "/projects/urban/reimaging co existance/taqreeban masterplan.png",
+        "/projects/urban/reimaging co existance/masterrrrrrrrrrr plan Taqreeban.jpg",
+        "/projects/urban/reimaging co existance/CENTRE.png",
+        "/projects/urban/reimaging co existance/AGRICULTURE PART.jpg",
+        "/projects/urban/reimaging co existance/agriculture model axo.png",
+        "/projects/urban/reimaging co existance/BIO GAS LIVESTOCK PART.jpg",
+        "/projects/urban/reimaging co existance/livestock model axo.png",
+        "/projects/urban/reimaging co existance/livestock model axo 2.png",
+        "/projects/urban/reimaging co existance/jungle model axo.png",
+        "/projects/urban/reimaging co existance/TEXTILE PART ISO.jpg",
+        "/projects/urban/reimaging co existance/WORKSHOP PART ISO.jpg",
+        "/projects/urban/reimaging co existance/PARKING.png",
+        "/projects/urban/reimaging co existance/view 1.png",
+        "/projects/urban/reimaging co existance/view 11.png",
+        "/projects/urban/reimaging co existance/viewn2.png",
+        "/projects/urban/reimaging co existance/1.png",
+        "/projects/urban/reimaging co existance/2.png",
+        "/projects/urban/reimaging co existance/22.png",
+        "/projects/urban/reimaging co existance/33.png",
+        "/projects/urban/reimaging co existance/44.png",
+      ],
+    },
+  ],
+  fashion: [
+    {
+      slug: "fashion-design",
+      title: "Fashion Design",
+      place: "Fashion",
+      year: "",
+      blurb: "Garment studies carrying the studio's geometry into cloth.",
+      description:
+        "A fashion design series by the studio. The same interest in proportion, structure and silhouette that shapes our buildings is worked out here at the scale of the body.",
+      cover: "/projects/fashiondesign/1.jpeg",
+      gallery: [
+        "/projects/fashiondesign/1.jpeg",
+        "/projects/fashiondesign/2.jpeg",
+        "/projects/fashiondesign/3.jpeg",
+        "/projects/fashiondesign/4.jpeg",
+        "/projects/fashiondesign/5.jpeg",
+        "/projects/fashiondesign/6.jpeg",
+        "/projects/fashiondesign/7.jpeg",
+        "/projects/fashiondesign/8.jpeg",
+        "/projects/fashiondesign/9.jpeg",
+        "/projects/fashiondesign/10.jpeg",
+        "/projects/fashiondesign/11.jpeg",
+        "/projects/fashiondesign/12.jpeg",
+        "/projects/fashiondesign/13.jpeg",
+        "/projects/fashiondesign/14.jpeg",
+        "/projects/fashiondesign/15.jpeg",
+      ],
+    },
+    {
+      slug: "furniture-design",
+      title: "Furniture Design",
+      place: "Fashion",
+      year: "",
+      blurb: "Walls, frames and fittings — from working drawing to render.",
+      description:
+        "A furniture and fitted-joinery series developed for interiors of the studio's own projects. Shown as finished visuals alongside the working drawings that set out each wall, frame and module.",
+      cover: "/projects/furnituredesign/visuals/1.png",
+      display: "natural",
+      sections: [
+        {
+          title: "Visuals",
+          images: [
+            "/projects/furnituredesign/visuals/1.png",
+            "/projects/furnituredesign/visuals/2.png",
+            "/projects/furnituredesign/visuals/3.png",
+            "/projects/furnituredesign/visuals/4.png",
+            "/projects/furnituredesign/visuals/5.png",
+            "/projects/furnituredesign/visuals/6.png",
+            "/projects/furnituredesign/visuals/7.png",
+            "/projects/furnituredesign/visuals/9.png",
+            "/projects/furnituredesign/visuals/10.png",
+            "/projects/furnituredesign/visuals/11.png",
+            "/projects/furnituredesign/visuals/11 (1).png",
+            "/projects/furnituredesign/visuals/11 (3).png",
+            "/projects/furnituredesign/visuals/11c.png",
+            "/projects/furnituredesign/visuals/13a.png",
+            "/projects/furnituredesign/visuals/13d.png",
+            "/projects/furnituredesign/visuals/14b.png",
+          ],
+        },
+        {
+          title: "Drawings",
+          images: [
+            "/projects/furnituredesign/drawings/1.png",
+            "/projects/furnituredesign/drawings/front wall.png",
+            "/projects/furnituredesign/drawings/artisan wall.png",
+            "/projects/furnituredesign/drawings/interective wall.png",
+            "/projects/furnituredesign/drawings/fabinachi wall.png",
+            "/projects/furnituredesign/drawings/fabinachoi front wall.png",
+            "/projects/furnituredesign/drawings/khambeer wall.png",
+            "/projects/furnituredesign/drawings/khambeer.png",
+            "/projects/furnituredesign/drawings/frame.png",
+            "/projects/furnituredesign/drawings/frame 2.png",
+            "/projects/furnituredesign/drawings/dim.jpeg",
+          ],
+        },
+      ],
+    },
+  ],
   landscape: [],
   "logo-branding": [],
-  "ai-visualization": [
-    {
-      slug: "ai-visualization-studies",
-      title: "AI Visualization Studies",
-      place: "AI Visualization",
-      year: "",
-      blurb: "AI-driven visual studies exploring atmosphere, form and material.",
-      description:
-        "A set of AI-assisted visualization studies produced by the studio. Each plate explores a different combination of atmosphere, light, and material — used as a thinking tool alongside our drawings.",
-      cover: "/projects/ai_visualization/1.jpeg",
-      gallery: [
-        "/projects/ai_visualization/1.jpeg",
-        "/projects/ai_visualization/2.jpeg",
-        "/projects/ai_visualization/3.jpeg",
-        "/projects/ai_visualization/4.jpeg",
-        "/projects/ai_visualization/5.jpeg",
-        "/projects/ai_visualization/6.jpeg",
-      ],
-    },
-  ],
-  "culture-gathering": [
-    {
-      slug: "culture-and-gathering",
-      title: "Culture & Gathering",
-      place: "Culture & Gathering",
-      year: "",
-      blurb: "Spaces for community, ritual and shared experience.",
-      description:
-        "A studio investigation into spaces of culture and gathering — including the Saregama Karwan and Taqreeban proposals, master plans, and isometric studies that situate ritual, community and performance within a shared spatial language.",
-      cover: "/projects/cultureandgathering/1.png",
-      gallery: [
-        "/projects/cultureandgathering/1.png",
-        "/projects/cultureandgathering/2.png",
-        "/projects/cultureandgathering/3.png",
-        "/projects/cultureandgathering/4.png",
-        "/projects/cultureandgathering/saregama%20karwan.png",
-        "/projects/cultureandgathering/taqreeban.png",
-        "/projects/cultureandgathering/masterpplan.png",
-        "/projects/cultureandgathering/plan.png",
-        "/projects/cultureandgathering/iso-%20metric%20view.png",
-      ],
-    },
-  ],
-};
-
-export const categoryLabel: Record<string, string> = {
-  commercial: "Commercial",
-  residential: "Residential",
-  others: "Institutional",
-  "ai-visualization": "AI Visualization",
-  "culture-gathering": "Culture & Gathering",
 };

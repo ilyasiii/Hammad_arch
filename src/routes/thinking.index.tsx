@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { assetUrl } from "@/lib/assets";
 import { thinkingProjects, thinkingPdfs } from "@/lib/thinking-data";
 
 export const Route = createFileRoute("/thinking/")({
@@ -38,7 +39,7 @@ function ThinkingIndex() {
             >
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 <img
-                  src={t.cover}
+                  src={assetUrl(t.cover)}
                   alt={t.title}
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -59,7 +60,7 @@ function ThinkingIndex() {
               {thinkingPdfs.map((pdf) => (
                 <li key={pdf.href}>
                   <a
-                    href={pdf.href}
+                    href={assetUrl(pdf.href)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-display group flex items-center justify-between py-5 text-2xl text-foreground hover:text-clay md:text-3xl"

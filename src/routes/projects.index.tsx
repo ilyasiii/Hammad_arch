@@ -1,20 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { projectsByCategory } from "@/lib/projects-data";
-
-const categories = [
-  "all",
-  "commercial",
-  "residential",
-  "others",
-  "urban-planning",
-  "landscape",
-  "logo-branding",
-  "ai-visualization",
-  "culture-gathering",
-] as const;
-type Cat = (typeof categories)[number];
+import { assetUrl } from "@/lib/assets";
+import { categories, categoryLabel, projectsByCategory, type Cat } from "@/lib/projects-data";
 
 export const Route = createFileRoute("/projects/")({
   head: () => ({
@@ -30,18 +18,6 @@ export const Route = createFileRoute("/projects/")({
   },
   component: ProjectsIndex,
 });
-
-const tabLabel: Record<Cat, string> = {
-  all: "All",
-  commercial: "Commercial",
-  residential: "Residential",
-  others: "Institutional",
-  "urban-planning": "Urban Planning",
-  landscape: "Landscape",
-  "logo-branding": "Logo & Branding",
-  "ai-visualization": "AI Visualization",
-  "culture-gathering": "Culture & Gathering",
-};
 
 function ProjectsIndex() {
   const { cat: active } = Route.useSearch();
@@ -74,7 +50,7 @@ function ProjectsIndex() {
                 active === cat ? "text-clay" : "text-foreground/60 hover:text-foreground"
               }`}
             >
-              {tabLabel[cat]}
+              {categoryLabel[cat]}
             </button>
           ))}
         </div>
@@ -89,14 +65,17 @@ function ProjectsIndex() {
             >
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 <img
-                  src={p.cover}
+                  src={assetUrl(p.cover)}
                   alt={p.title}
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
               <h3 className="font-display mt-4 text-2xl">{p.title}</h3>
-              <p className="text-muted-foreground italic">{p.place} · {p.year}</p>
+              <p className="text-muted-foreground italic">
+                {p.place}
+                {p.year ? ` · ${p.year}` : ""}
+              </p>
               <p className="mt-1 text-sm text-foreground/70">{p.blurb}</p>
             </Link>
           ))}

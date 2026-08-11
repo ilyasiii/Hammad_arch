@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { assetUrl } from "@/lib/assets";
 import { thinkingProjects } from "@/lib/thinking-data";
 
 export const Route = createFileRoute("/thinking/$slug/$sub")({
@@ -59,7 +60,7 @@ function ThinkingCollection() {
           {collection.gallery.map((src, i) => (
             <img
               key={i}
-              src={src}
+              src={assetUrl(src)}
               alt={`${collection.title} ${i + 1}`}
               loading="lazy"
               className="block h-auto w-full bg-muted"
