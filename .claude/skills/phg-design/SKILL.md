@@ -18,7 +18,7 @@ photography, it is wrong.
 **The 3D exception.** A WebGL armature of platonic solids
 (`src/components/geometry-scene.tsx`) sits **beside the philosophy copy** on the
 home page, the section it actually illustrates. It earns its place because the
-practice is named Phenomenological *Geometry* and keeps a Sacred Geometry
+practice is named Phenomenological _Geometry_ and keeps a Sacred Geometry
 project: the polyhedra are the subject, not decoration. It is procedural, so it
 needs no model export. Showing the studio's actual buildings in 3D would need
 `.glb` files from SketchUp; until those exist, do not fake it.
@@ -48,12 +48,12 @@ WebGL image distortion, text-scramble effects.
 
 Defined in `src/styles.css`. Never hard-code a hex or a duration in a component.
 
-| Token | Value | Use |
-| --- | --- | --- |
-| `--cream` | `oklch(0.965 0.012 85)` | page background |
-| `--ink` | `oklch(0.18 0.012 60)` | text, footer ground |
-| `--clay` | `oklch(0.58 0.16 38)` | the single accent, labels, hovers, emphasis |
-| `--stone` | `oklch(0.55 0.008 60)` | muted text |
+| Token     | Value                   | Use                                         |
+| --------- | ----------------------- | ------------------------------------------- |
+| `--cream` | `oklch(0.965 0.012 85)` | page background                             |
+| `--ink`   | `oklch(0.18 0.012 60)`  | text, footer ground                         |
+| `--clay`  | `oklch(0.58 0.16 38)`   | the single accent, labels, hovers, emphasis |
+| `--stone` | `oklch(0.55 0.008 60)`  | muted text                                  |
 
 Clay is the only accent. One accent, used sparingly, reads as confidence; a
 second one reads as indecision.
@@ -141,18 +141,18 @@ Sacred Geometry, a white plan, leave cream text unreadable.
 
 ## Layout catalog
 
-A project's layout is a property of its *material*, not a default. Every project
+A project's layout is a property of its _material_, not a default. Every project
 in `src/lib/projects-data.ts` declares one; `src/components/gallery.tsx`
 implements them.
 
-| Layout | Material it suits | Form |
-| --- | --- | --- |
-| `grid` | photographed interiors, uniform sets | even 4:3 two-column grid, cropped |
-| `editorial` | a small number of strong plates | alternating wide/narrow, offset, generous whitespace |
-| `contact-sheet` | large sketch sets (Ravi's 33) | dense three/four-column, uncropped, lightbox on click |
-| `diptych` | drawing paired with its render | two-up rows at natural height |
-| `compare` | existing vs proposed | two columns under sticky Before/After labels |
-| `cinematic` | one hero project | full-bleed alternating with inset plates |
+| Layout          | Material it suits                    | Form                                                  |
+| --------------- | ------------------------------------ | ----------------------------------------------------- |
+| `grid`          | photographed interiors, uniform sets | even 4:3 two-column grid, cropped                     |
+| `editorial`     | a small number of strong plates      | alternating wide/narrow, offset, generous whitespace  |
+| `contact-sheet` | large sketch sets (Ravi's 33)        | dense three/four-column, uncropped, lightbox on click |
+| `diptych`       | drawing paired with its render       | two-up rows at natural height                         |
+| `compare`       | existing vs proposed                 | two columns under sticky Before/After labels          |
+| `cinematic`     | one hero project                     | full-bleed alternating with inset plates              |
 
 Sub-groups within a project use `sections`; before/after uses `compare`. Both
 compose with any layout.

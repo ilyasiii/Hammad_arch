@@ -78,13 +78,23 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Ph.G Studio Phenomenological Geometry" },
-      { name: "description", content: "Ph.G Studio is a multidisciplinary architecture and design practice exploring Perception, Human experience, Pause, and Geometry." },
+      {
+        name: "description",
+        content:
+          "Ph.G Studio is a multidisciplinary architecture and design practice exploring Perception, Human experience, Pause, and Geometry.",
+      },
       { property: "og:title", content: "Ph.G Studio Phenomenological Geometry" },
-      { property: "og:description", content: "Architecture shaped through Perception, Human Experience, Pause, and Geometry." },
+      {
+        property: "og:description",
+        content: "Architecture shaped through Perception, Human Experience, Pause, and Geometry.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Ph.G Studio Phenomenological Geometry" },
-      { name: "twitter:description", content: "Architecture shaped through Perception, Human Experience, Pause, and Geometry." },
+      {
+        name: "twitter:description",
+        content: "Architecture shaped through Perception, Human Experience, Pause, and Geometry.",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -112,7 +122,9 @@ function RootShell({ children }: { children: ReactNode }) {
         {/* Runs before first paint. Everything that hides content until JS acts
             (scroll reveals) is scoped to this class, so a dead bundle degrades
             to plain visible content instead of a blank page. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script
+          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+        />
         <HeadContent />
       </head>
       <body>

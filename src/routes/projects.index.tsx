@@ -4,7 +4,13 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ProjectCard } from "@/components/project-card";
 import { Reveal, RevealText } from "@/components/reveal";
-import { categories, categoryLabel, projectsByCategory, type Cat, type Project } from "@/lib/projects-data";
+import {
+  categories,
+  categoryLabel,
+  projectsByCategory,
+  type Cat,
+  type Project,
+} from "@/lib/projects-data";
 
 export const Route = createFileRoute("/projects/")({
   head: () => ({

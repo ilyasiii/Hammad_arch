@@ -12,9 +12,16 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Ph.G Studio Phenomenological Geometry" },
-      { name: "description", content: "Ph.G Studio an multidisciplinary architecture and design practice exploring Perception, Human experience, Pause, and Geometry." },
+      {
+        name: "description",
+        content:
+          "Ph.G Studio an multidisciplinary architecture and design practice exploring Perception, Human experience, Pause, and Geometry.",
+      },
       { property: "og:title", content: "Ph.G Studio Phenomenological Geometry" },
-      { property: "og:description", content: "Architecture shaped through Perception, Human Experience, Pause, and Geometry." },
+      {
+        property: "og:description",
+        content: "Architecture shaped through Perception, Human Experience, Pause, and Geometry.",
+      },
     ],
   }),
   component: Index,
@@ -117,10 +124,10 @@ function Index() {
             <Reveal index={2}>
               <p className="mt-10 max-w-xl text-lg leading-relaxed text-foreground/80">
                 Ph.G Studio is an multidisciplinary architecture and design practice founded on the
-                belief that meaningful spaces emerge through the relationship between human experience
-                and geometry. We explore architecture as a medium of perception, reflection, and spatial
-                expression creating environments that are thoughtful, functional, and emotionally
-                engaging.
+                belief that meaningful spaces emerge through the relationship between human
+                experience and geometry. We explore architecture as a medium of perception,
+                reflection, and spatial expression creating environments that are thoughtful,
+                functional, and emotionally engaging.
               </p>
             </Reveal>
           </div>

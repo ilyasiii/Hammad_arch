@@ -11,7 +11,10 @@ export const Route = createFileRoute("/people")({
       { title: "People Ph.G Studio" },
       { name: "description", content: "The team behind Ph.G Studio." },
       { property: "og:title", content: "People Ph.G Studio" },
-      { property: "og:description", content: "Architects, directors and collaborators behind Ph.G Studio." },
+      {
+        property: "og:description",
+        content: "Architects, directors and collaborators behind Ph.G Studio.",
+      },
     ],
   }),
   component: People,

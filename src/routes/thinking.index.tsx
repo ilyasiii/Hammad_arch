@@ -13,7 +13,10 @@ export const Route = createFileRoute("/thinking/")({
       { title: "Thinking Ph.G Studio" },
       { name: "description", content: "Writings, research and reflections from Ph.G Studio." },
       { property: "og:title", content: "Thinking Ph.G Studio" },
-      { property: "og:description", content: "Writings, research and reflections from Ph.G Studio." },
+      {
+        property: "og:description",
+        content: "Writings, research and reflections from Ph.G Studio.",
+      },
     ],
   }),
   component: ThinkingIndex,
@@ -30,8 +33,8 @@ function ThinkingIndex() {
           Notes, sketches &amp; <em className="text-clay">writings.</em>
         </RevealText>
         <p className="mt-10 max-w-2xl text-lg leading-relaxed text-foreground/80">
-          The working material behind the projects. Notebooks, diagrams and studies kept as
-          they were made.
+          The working material behind the projects. Notebooks, diagrams and studies kept as they
+          were made.
         </p>
       </section>
 
@@ -45,16 +48,18 @@ function ThinkingIndex() {
                 viewTransition
                 className="group block"
               >
-                <Tilt><div className="plate-frame overflow-hidden">
-                  <Plate
-                    src={t.cover}
-                    alt={t.title}
-                    ratio="4/3"
-                    sizes="(min-width: 768px) 46vw, 92vw"
-                    priority={i === 0}
-                    className="transition-transform duration-[var(--dur-base)] ease-[var(--ease-out-expo)] group-hover:scale-[1.03]"
-                  />
-                </div></Tilt>
+                <Tilt>
+                  <div className="plate-frame overflow-hidden">
+                    <Plate
+                      src={t.cover}
+                      alt={t.title}
+                      ratio="4/3"
+                      sizes="(min-width: 768px) 46vw, 92vw"
+                      priority={i === 0}
+                      className="transition-transform duration-[var(--dur-base)] ease-[var(--ease-out-expo)] group-hover:scale-[1.03]"
+                    />
+                  </div>
+                </Tilt>
                 <div className="mt-5 flex items-baseline justify-between gap-4">
                   <h2
                     className="font-display text-3xl transition-colors duration-[var(--dur-fast)] group-hover:text-clay md:text-4xl"

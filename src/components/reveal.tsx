@@ -42,7 +42,9 @@ function useInView<T extends HTMLElement>() {
 }
 
 const delayStyle = (index: number) =>
-  ({ "--reveal-delay": `${Math.min(index, MAX_STAGGER_STEPS) * STAGGER_MS}ms` }) as React.CSSProperties;
+  ({
+    "--reveal-delay": `${Math.min(index, MAX_STAGGER_STEPS) * STAGGER_MS}ms`,
+  }) as React.CSSProperties;
 
 /**
  * `as` is always a plain HTML tag here, but TypeScript collapses the props of a

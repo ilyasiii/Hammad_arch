@@ -47,7 +47,10 @@ function ProjectHero({
 }) {
   return (
     <section className="relative mt-16 min-h-[68svh] w-full overflow-hidden bg-ink">
-      <div className="absolute inset-0" style={{ viewTransitionName: `project-cover-${project.slug}` }}>
+      <div
+        className="absolute inset-0"
+        style={{ viewTransitionName: `project-cover-${project.slug}` }}
+      >
         <Plate src={project.cover} alt={project.title} fill sizes="100vw" priority />
       </div>
 

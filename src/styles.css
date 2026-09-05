@@ -187,13 +187,21 @@
 }
 
 @keyframes marquee-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(calc(-50% - 0.75rem)); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 0.75rem));
+  }
 }
 
 @keyframes marquee-right {
-  from { transform: translateX(calc(-50% - 0.75rem)); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(calc(-50% - 0.75rem));
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 /* No automatic movement for anyone who asked for none, the strip becomes an
@@ -275,4 +283,3 @@
   text-transform: uppercase;
   font-weight: 500;
 }
-

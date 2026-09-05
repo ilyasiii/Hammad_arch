@@ -7,9 +7,16 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About Ph.G Studio" },
-      { name: "description", content: "Ph.G Studio Phenomenological Geometry. An multidisciplinary architecture and design practice." },
+      {
+        name: "description",
+        content:
+          "Ph.G Studio Phenomenological Geometry. An multidisciplinary architecture and design practice.",
+      },
       { property: "og:title", content: "About Ph.G Studio" },
-      { property: "og:description", content: "Architecture shaped through Perception, Human Experience, Pause, and Geometry." },
+      {
+        property: "og:description",
+        content: "Architecture shaped through Perception, Human Experience, Pause, and Geometry.",
+      },
     ],
   }),
   component: About,
@@ -62,11 +69,31 @@ const serviceGroups = [
 
 const process = [
   { n: "01", title: "Discovery", body: "Understanding the client, context, and aspirations." },
-  { n: "02", title: "Research", body: "Analyzing site conditions, opportunities, and constraints." },
-  { n: "03", title: "Concept Development", body: "Generating design directions and spatial strategies." },
-  { n: "04", title: "Design Development", body: "Refining planning, form, materiality, and experience." },
-  { n: "05", title: "Visualization", body: "Communicating the design through 3D drawings, diagrams, and renderings." },
-  { n: "06", title: "Documentation", body: "Preparing detailed drawings and project deliverables." },
+  {
+    n: "02",
+    title: "Research",
+    body: "Analyzing site conditions, opportunities, and constraints.",
+  },
+  {
+    n: "03",
+    title: "Concept Development",
+    body: "Generating design directions and spatial strategies.",
+  },
+  {
+    n: "04",
+    title: "Design Development",
+    body: "Refining planning, form, materiality, and experience.",
+  },
+  {
+    n: "05",
+    title: "Visualization",
+    body: "Communicating the design through 3D drawings, diagrams, and renderings.",
+  },
+  {
+    n: "06",
+    title: "Documentation",
+    body: "Preparing detailed drawings and project deliverables.",
+  },
 ];
 
 function About() {
@@ -97,7 +124,9 @@ function About() {
                 <ul className="mt-5 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
                   {g.items.map((it) => (
                     <li key={it} className="flex gap-3 text-foreground/80">
-                      <span aria-hidden="true" className="text-clay/50">·</span>
+                      <span aria-hidden="true" className="text-clay/50">
+                        ·
+                      </span>
                       {it}
                     </li>
                   ))}
@@ -132,9 +161,7 @@ function About() {
       {/* Close */}
       <section className="mx-auto max-w-[1600px] px-6 pb-32 md:px-10">
         <div className="flex flex-wrap items-end justify-between gap-6 border-t border-border pt-12">
-          <h2 className="font-display max-w-2xl text-4xl md:text-5xl">
-            Have a project in mind?
-          </h2>
+          <h2 className="font-display max-w-2xl text-4xl md:text-5xl">Have a project in mind?</h2>
           <Link
             to="/contact"
             className="font-label group text-muted-foreground transition-colors hover:text-clay"

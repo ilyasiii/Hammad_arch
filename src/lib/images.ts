@@ -48,4 +48,3 @@ export function getImage(path: string): ImageMeta | null {
     })),
   };
 }
-

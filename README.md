@@ -6,17 +6,17 @@ Hussain. Server-rendered React on TanStack Start.
 
 Live pages:
 
-| Route | Purpose |
-| --- | --- |
-| `/` | Hero slideshow, philosophy with the 3D armature, two travelling project strips |
-| `/projects?cat=…` | Filterable gallery, the active filter lives in the URL |
-| `/projects/$category/$slug` | Project page, full-bleed hero then a per-project gallery layout |
-| `/thinking` | Brainstorming folders, Spatial Experimentation, PDF writings |
-| `/thinking/$slug` | A thinking project's collections |
-| `/thinking/$slug/$sub` | One collection's plates |
-| `/about` | Services and design process |
-| `/people` | Team |
-| `/contact` | Studio contact info + Web3Forms enquiry form |
+| Route                       | Purpose                                                                        |
+| --------------------------- | ------------------------------------------------------------------------------ |
+| `/`                         | Hero slideshow, philosophy with the 3D armature, two travelling project strips |
+| `/projects?cat=…`           | Filterable gallery, the active filter lives in the URL                         |
+| `/projects/$category/$slug` | Project page, full-bleed hero then a per-project gallery layout                |
+| `/thinking`                 | Brainstorming folders, Spatial Experimentation, PDF writings                   |
+| `/thinking/$slug`           | A thinking project's collections                                               |
+| `/thinking/$slug/$sub`      | One collection's plates                                                        |
+| `/about`                    | Services and design process                                                    |
+| `/people`                   | Team                                                                           |
+| `/contact`                  | Studio contact info + Web3Forms enquiry form                                   |
 
 ## Tech stack
 
@@ -38,13 +38,13 @@ npm run images   # generate image derivatives (first run ~20 min, then increment
 npm run dev      # http://localhost:8080
 ```
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Dev server with HMR on <http://localhost:8080> |
-| `npm run images` | Regenerate image derivatives into `public/_opt` |
-| `npm run build` | Production build (runs `images` first via `prebuild`) |
-| `npm run preview` | Serve the production build |
-| `npm run lint` | ESLint |
+| Command           | What it does                                          |
+| ----------------- | ----------------------------------------------------- |
+| `npm run dev`     | Dev server with HMR on <http://localhost:8080>        |
+| `npm run images`  | Regenerate image derivatives into `public/_opt`       |
+| `npm run build`   | Production build (runs `images` first via `prebuild`) |
+| `npm run preview` | Serve the production build                            |
+| `npm run lint`    | ESLint                                                |
 
 ## Images, read this before adding any
 
@@ -62,11 +62,11 @@ records dimensions and a placeholder colour into `src/lib/image-manifest.json`.
 
 ### Scripts
 
-| Script | Purpose |
-| --- | --- |
-| `scripts/optimize-images.mjs` | The pipeline above. Run via `npm run images`, and automatically by `prebuild`. |
-| `scripts/report-payload.mjs` | Prints the weight of every project page, before and after optimisation. |
-| `scripts/move-unused.mjs` | Lists files under `public/` that nothing references. Pass `--apply` to move them into `unused/`. Always dry-run first. |
+| Script                        | Purpose                                                                                                                |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `scripts/optimize-images.mjs` | The pipeline above. Run via `npm run images`, and automatically by `prebuild`.                                         |
+| `scripts/report-payload.mjs`  | Prints the weight of every project page, before and after optimisation.                                                |
+| `scripts/move-unused.mjs`     | Lists files under `public/` that nothing references. Pass `--apply` to move them into `unused/`. Always dry-run first. |
 
 Run the last two with `node --experimental-strip-types scripts/<name>.mjs`.
 
@@ -79,29 +79,29 @@ them.
 
 ## Editing content
 
-| Content | File |
-| --- | --- |
-| Project catalog, categories, tab order | `src/lib/projects-data.ts` |
-| Thinking collections and PDF writings | `src/lib/thinking-data.ts` |
-| Pillars / philosophy copy | `src/routes/index.tsx` (`pillars`) |
-| Services & design process | `src/routes/about.tsx` |
-| Team members | `src/routes/people.tsx` (`team`) |
-| Contact details, socials | `src/routes/contact.tsx`, `src/components/site-footer.tsx` |
-| Theme + motion tokens | `src/styles.css` |
-| Home hero plates | `public/projects/home/` + `slides` in `src/routes/index.tsx` |
+| Content                                | File                                                         |
+| -------------------------------------- | ------------------------------------------------------------ |
+| Project catalog, categories, tab order | `src/lib/projects-data.ts`                                   |
+| Thinking collections and PDF writings  | `src/lib/thinking-data.ts`                                   |
+| Pillars / philosophy copy              | `src/routes/index.tsx` (`pillars`)                           |
+| Services & design process              | `src/routes/about.tsx`                                       |
+| Team members                           | `src/routes/people.tsx` (`team`)                             |
+| Contact details, socials               | `src/routes/contact.tsx`, `src/components/site-footer.tsx`   |
+| Theme + motion tokens                  | `src/styles.css`                                             |
+| Home hero plates                       | `public/projects/home/` + `slides` in `src/routes/index.tsx` |
 
 ### Adding a project
 
 Add an entry to the right category array in `src/lib/projects-data.ts`. Every
 project declares a `layout` that suits its material:
 
-| Layout | For |
-| --- | --- |
-| `grid` | photographed interiors, uniform 4:3, cropped |
-| `diptych` | drawings and renders, two-up, never cropped |
-| `editorial` | a few strong plates, offset, diagonal rhythm |
-| `contact-sheet` | large sketch sets, dense masonry |
-| `cinematic` | the hero project, full-measure plates among pairs |
+| Layout          | For                                               |
+| --------------- | ------------------------------------------------- |
+| `grid`          | photographed interiors, uniform 4:3, cropped      |
+| `diptych`       | drawings and renders, two-up, never cropped       |
+| `editorial`     | a few strong plates, offset, diagonal rhythm      |
+| `contact-sheet` | large sketch sets, dense masonry                  |
+| `cinematic`     | the hero project, full-measure plates among pairs |
 
 Use `sections` for named sub-groups and `compare` for before/after columns
 (see Pedestrianizing Anarkali). New categories go in the `categories` tuple and

@@ -21,8 +21,15 @@
  * commit what changes under public/_opt alongside the sources.
  */
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync } from "node:fs";
-import { readdir, stat, readFile, writeFile } from "node:fs/promises";
+import {
+  existsSync,
+  readFileSync,
+  writeFileSync,
+  mkdirSync,
+  readdirSync,
+  unlinkSync,
+} from "node:fs";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join, relative, extname } from "node:path";
 import { cpus } from "node:os";
 import { fileURLToPath } from "node:url";
@@ -89,7 +96,9 @@ async function processOne(absPath) {
   if (
     prior &&
     prior[0] === hash &&
-    prior[4].every((w) => ["avif", "webp"].every((e) => existsSync(join(OUT_DIR, `${hash}-${w}.${e}`))))
+    prior[4].every((w) =>
+      ["avif", "webp"].every((e) => existsSync(join(OUT_DIR, `${hash}-${w}.${e}`))),
+    )
   ) {
     return { rel, entry: prior, written: 0 };
   }
@@ -156,7 +165,9 @@ async function main() {
     }),
   );
 
-  const sorted = Object.fromEntries(Object.entries(manifest).sort(([a], [b]) => a.localeCompare(b)));
+  const sorted = Object.fromEntries(
+    Object.entries(manifest).sort(([a], [b]) => a.localeCompare(b)),
+  );
   const previous = existsSync(MANIFEST) ? readFileSync(MANIFEST, "utf8") : "";
   const next = JSON.stringify(sorted, null, 0) + "\n";
   if (next !== previous) writeFileSync(MANIFEST, next);

@@ -88,8 +88,7 @@ export default function GeometryScene() {
   // Read once at mount rather than subscribing: this only decides whether the
   // armature turns, and the global CSS rule handles everything else.
   const reduced =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   return (
     <Canvas

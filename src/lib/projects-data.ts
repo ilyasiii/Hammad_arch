@@ -594,7 +594,8 @@ export const projectsByCategory: Record<string, Project[]> = {
       blurb: "Shelter houses read against the Ravi and the settlement beside it.",
       description:
         "A landscape study along the Ravi. Hand-drawn site maps set the baradari, the informal settlement and the kachi abadi against primary roads, urban nullahs and remaining green cover, and the shelter itself is drawn as a raised circular platform built around an existing tree.",
-      cover: "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.42.55 PM.jpeg",
+      cover:
+        "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.42.55 PM.jpeg",
       gallery: [
         "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.42.55 PM.jpeg",
         "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.47.32 PM (1).jpeg",

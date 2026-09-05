@@ -28,7 +28,7 @@ export function Marquee({ items, direction = "left", duration = 48 }: MarqueePro
   if (items.length === 0) return null;
 
   const row = (copy: number) =>
-    items.map(({ project, cat }, i) => {
+    items.map(({ project, cat }) => {
       const duplicate = copy === 1;
       return (
         <Link

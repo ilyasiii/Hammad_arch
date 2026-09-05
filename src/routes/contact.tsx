@@ -8,7 +8,10 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact Ph.G Studio" },
-      { name: "description", content: "Get in touch with Ph.G Studio for new commissions and collaborations." },
+      {
+        name: "description",
+        content: "Get in touch with Ph.G Studio for new commissions and collaborations.",
+      },
       { property: "og:title", content: "Contact Ph.G Studio" },
       { property: "og:description", content: "Write to us about your next project." },
     ],
@@ -102,7 +105,12 @@ function Contact() {
             <Reveal as="div" index={1}>
               <dt className="font-label text-muted-foreground">WhatsApp</dt>
               <dd className="mt-1 text-xl">
-                <a href="https://wa.me/923030444072" target="_blank" rel="noopener noreferrer" className="hover:text-clay">
+                <a
+                  href="https://wa.me/923030444072"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-clay"
+                >
                   +92 303 0444072
                 </a>
               </dd>
@@ -141,15 +149,13 @@ function Contact() {
             <div className="bg-ink text-cream p-12 md:p-16">
               <p className="font-label text-clay">✶ Received</p>
               <h3 className="font-display mt-6 text-5xl">
-                Thank you.<br />
+                Thank you.
+                <br />
                 <em>We'll write back soon.</em>
               </h3>
             </div>
           ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="bg-card p-8 md:p-12"
-            >
+            <form onSubmit={handleSubmit} className="bg-card p-8 md:p-12">
               <p className="font-label text-muted-foreground">Nº 001 New Enquiry</p>
 
               <div className="mt-10 space-y-8">
@@ -181,9 +187,7 @@ function Contact() {
                 aria-hidden="true"
               />
 
-              {status === "error" && (
-                <p className="mt-6 text-sm text-destructive">{errorMsg}</p>
-              )}
+              {status === "error" && <p className="mt-6 text-sm text-destructive">{errorMsg}</p>}
 
               <button
                 type="submit"
