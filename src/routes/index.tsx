@@ -24,9 +24,9 @@ export const Route = createFileRoute("/")({
 // hero has its own set and is not silently changed by a project cover swap.
 // Ordered to alternate warm interior, open exterior, dark drawing.
 const slides = [
-  "/projects/home/home-nca.jpeg",
+  "/projects/home/home-thesis.png",
   "/projects/home/home-panahgah.jpg",
-  "/projects/home/home-intellectual-spine.jpeg",
+  "/projects/home/home-interior.png",
   "/projects/home/home-artisan-bakery.jpeg",
 ];
 
@@ -75,8 +75,12 @@ function Index() {
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
 
-      {/* HERO, full viewport below the navbar, plates cross-fading beneath a
-          single line of type. The first slide is eager; the rest lazy. */}
+      {/* HERO, full viewport below the navbar, plates cross-fading with nothing
+          laid over them. The first slide is eager; the rest lazy.
+
+          The heading is present but visually hidden: the page still needs one
+          h1 for assistive tech and for search results, and the plates alone
+          cannot supply it. */}
       <section className="relative mt-16 h-[calc(100svh-4rem)] w-full overflow-hidden bg-ink">
         {slides.map((src, idx) => (
           <div
@@ -90,33 +94,9 @@ function Index() {
           </div>
         ))}
 
-        {/* Legibility wash, kept to the bottom third so the image stays the subject. */}
-        <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-ink/70 to-transparent" />
-
-        <div className="absolute inset-x-0 bottom-0 z-10 px-6 pb-10 md:px-10 md:pb-14">
-          <div className="mx-auto flex max-w-[1600px] flex-col gap-8">
-            <h1 className="font-display max-w-3xl text-4xl text-cream md:text-6xl">
-              Architecture shaped through perception,
-              <br className="hidden md:block" /> human experience,{" "}
-              <em className="text-clay">pause</em> and geometry.
-            </h1>
-
-            <div className="flex gap-3" role="tablist" aria-label="Hero slides">
-              {slides.map((_, idx) => (
-                <button
-                  key={idx}
-                  role="tab"
-                  aria-selected={i === idx}
-                  aria-label={`Slide ${idx + 1}`}
-                  onClick={() => setI(idx)}
-                  className={`h-[2px] w-12 transition-colors duration-[var(--dur-base)] ${
-                    i === idx ? "bg-cream" : "bg-cream/30 hover:bg-cream/60"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+        <h1 className="sr-only">
+          Ph.G Studio, architecture shaped through perception, human experience, pause and geometry.
+        </h1>
       </section>
 
       {/* PHILOSOPHY, label sits directly above the heading, as it does on every

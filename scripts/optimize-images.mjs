@@ -15,11 +15,13 @@
  *   npm run images        regenerate (incremental, unchanged sources are skipped)
  *   npm run build         runs this first via the `prebuild` hook
  *
- * public/_opt is gitignored: derivatives are rebuilt on the deploy host rather
- * than adding a few hundred MB to an already image-heavy repo.
+ * public/_opt is COMMITTED. Encoding on the deploy host overran Vercel's
+ * 45-minute build limit, so the derivatives ship with the repo and this script
+ * becomes a fast no-op there. After adding or removing images, run it and
+ * commit what changes under public/_opt alongside the sources.
  */
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync } from "node:fs";
 import { readdir, stat, readFile, writeFile } from "node:fs/promises";
 import { join, relative, extname } from "node:path";
 import { cpus } from "node:os";
@@ -159,8 +161,26 @@ async function main() {
   const next = JSON.stringify(sorted, null, 0) + "\n";
   if (next !== previous) writeFileSync(MANIFEST, next);
 
+  // Drop derivatives no manifest entry claims any more. Without this, deleting
+  // or replacing a source image leaves its old files behind forever, and since
+  // public/_opt is committed those orphans would accumulate in the repository.
+  // Only ever runs on a complete pass: a run with failures leaves them alone,
+  // because a partial manifest would look like everything had been deleted.
+  let pruned = 0;
+  if (failures.length === 0) {
+    const keep = new Set();
+    for (const [hash, , , , widths] of Object.values(sorted))
+      for (const w of widths) for (const e of ["avif", "webp"]) keep.add(`${hash}-${w}.${e}`);
+    for (const name of readdirSync(OUT_DIR)) {
+      if (keep.has(name)) continue;
+      unlinkSync(join(OUT_DIR, name));
+      pruned++;
+    }
+  }
+
   console.log(
-    `done: ${Object.keys(sorted).length} images, ${written} derivatives written, ${((Date.now() - started) / 1000).toFixed(0)}s`,
+    `done: ${Object.keys(sorted).length} images, ${written} derivatives written, ` +
+      `${pruned} orphans pruned, ${((Date.now() - started) / 1000).toFixed(0)}s`,
   );
   if (failures.length) {
     console.log(`\n${failures.length} failed:`);
