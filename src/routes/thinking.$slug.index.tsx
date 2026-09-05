@@ -1,23 +1,22 @@
 import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { assetUrl } from "@/lib/assets";
+import { BackLink, RouteNotFound } from "@/components/back-link";
+import { useGoBack } from "@/lib/use-go-back";
+import { Gallery } from "@/components/gallery";
+import { Plate } from "@/components/plate";
+import { Reveal } from "@/components/reveal";
 import { thinkingProjects } from "@/lib/thinking-data";
 
 export const Route = createFileRoute("/thinking/$slug/")({
   head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug} Ph.G Studio` },
-    ],
+    meta: [{ title: `${params.slug} Ph.G Studio` }],
   }),
   component: ThinkingProjectIndex,
   notFoundComponent: () => (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
-      <div className="mx-auto max-w-[1200px] px-6 pt-40 md:px-10">
-        <h1 className="font-display text-4xl">Not found.</h1>
-        <Link to="/thinking" className="mt-6 inline-block underline">Back to Thinking</Link>
-      </div>
+      <RouteNotFound backTo="/thinking" backLabel="Back to Thinking" />
       <SiteFooter />
     </div>
   ),
@@ -29,50 +28,68 @@ function ThinkingProjectIndex() {
   const project = thinkingProjects.find((t) => t.slug === slug);
   if (!project) throw notFound();
 
-  const goBack = () => {
-    if (typeof window !== "undefined" && window.history.length > 1) {
-      router.history.back();
-    } else {
-      router.navigate({ to: "/thinking" });
-    }
-  };
+  const goBack = useGoBack(() => router.navigate({ to: "/thinking" }));
+
+  // A project holding a single collection has nothing to choose between, so its
+  // plates are shown here rather than behind a card leading to one more page.
+  const only = project.collections.length === 1 ? project.collections[0] : null;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
 
       <section className="mx-auto max-w-[1400px] px-6 pt-32 pb-10 md:px-10">
-        <button
-          type="button"
-          onClick={goBack}
-          className="font-label text-muted-foreground hover:text-foreground"
+        <BackLink label="Thinking" onClick={goBack} />
+        <h1
+          className="font-display mt-8 text-4xl md:text-5xl"
+          style={{ viewTransitionName: `thinking-title-${project.slug}` }}
         >
-          ← Thinking
-        </button>
-        <h1 className="font-display mt-6 text-4xl md:text-6xl">{project.title}</h1>
-        <p className="mt-6 max-w-2xl text-foreground/80">{project.description}</p>
+          {project.title}
+        </h1>
+        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-foreground/80">
+          {project.description}
+        </p>
       </section>
 
       <section className="mx-auto max-w-[1400px] px-6 pb-24 md:px-10">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-14 border-t border-border pt-12 md:grid-cols-2">
-          {project.collections.map((c) => (
-            <Link
-              key={c.slug}
-              to="/thinking/$slug/$sub"
-              params={{ slug: project.slug, sub: c.slug }}
-              className="group block"
-            >
-              <div className="aspect-[4/3] overflow-hidden bg-muted">
-                <img
-                  src={assetUrl(c.cover)}
-                  alt={c.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <h3 className="font-display mt-4 text-2xl md:text-3xl">{c.title}</h3>
-            </Link>
-          ))}
+        <div className="border-t border-border pt-12">
+          {only ? (
+            <Gallery images={only.gallery} layout={only.layout} alt={only.title} />
+          ) : (
+            <div className="grid grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2">
+              {project.collections.map((collection, i) => (
+                <Reveal key={collection.slug} index={i}>
+                  <Link
+                    to="/thinking/$slug/$sub"
+                    params={{ slug: project.slug, sub: collection.slug }}
+                    viewTransition
+                    className="group block"
+                  >
+                    <div
+                      className="plate-frame overflow-hidden"
+                      style={{ viewTransitionName: `collection-cover-${collection.slug}` }}
+                    >
+                      <Plate
+                        src={collection.cover}
+                        alt={collection.title}
+                        ratio="4/3"
+                        sizes="(min-width: 768px) 46vw, 92vw"
+                        className="transition-transform duration-[var(--dur-base)] ease-[var(--ease-out-expo)] group-hover:scale-[1.03]"
+                      />
+                    </div>
+                    <div className="mt-5 flex items-baseline justify-between gap-4">
+                      <h2 className="font-display text-3xl transition-colors duration-[var(--dur-fast)] group-hover:text-clay md:text-4xl">
+                        {collection.title}
+                      </h2>
+                      <span className="font-label text-muted-foreground">
+                        {collection.gallery.length}
+                      </span>
+                    </div>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

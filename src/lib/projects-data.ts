@@ -1,12 +1,13 @@
-// Paths below are RAW on-disk paths under public/ — never pre-encoded here.
-// Render sites wrap them in assetUrl() (src/lib/assets.ts).
+// Paths below are RAW on-disk paths under public/, never pre-encoded here.
+// <Plate> resolves them through the build-time image manifest.
+import type { GalleryLayout } from "./gallery-layout";
 
 export type ProjectSection = {
   title: string;
   images: string[];
 };
 
-export type ProjectCompare = {
+type ProjectCompare = {
   before: ProjectSection;
   after: ProjectSection;
 };
@@ -25,11 +26,8 @@ export type Project = {
   sections?: ProjectSection[];
   /** Side-by-side before/after columns (e.g. existing vs proposed). */
   compare?: ProjectCompare;
-  /**
-   * "crop"    — uniform 4:3 grid, images cropped to fill (default; photography).
-   * "natural" — masonry, full image, never cropped (plans, sections, drawings).
-   */
-  display?: "crop" | "natural";
+  /** How the plates are presented. Chosen from the material, see gallery-layout.ts. */
+  layout?: GalleryLayout;
 };
 
 // Order here is the order of the filter tabs on /projects.
@@ -63,6 +61,7 @@ export const projectsByCategory: Record<string, Project[]> = {
   commercial: [
     {
       slug: "artisan-bakery",
+      layout: "grid",
       title: "Artisan Bakery",
       place: "Commercial",
       year: "",
@@ -80,6 +79,7 @@ export const projectsByCategory: Record<string, Project[]> = {
     },
     {
       slug: "arena-fitness-club",
+      layout: "grid",
       title: "Arena Fitness Club",
       place: "Commercial Interior",
       year: "",
@@ -102,6 +102,7 @@ export const projectsByCategory: Record<string, Project[]> = {
   residential: [
     {
       slug: "visal-home",
+      layout: "grid",
       title: "Visal Home",
       place: "Residential",
       year: "",
@@ -119,6 +120,7 @@ export const projectsByCategory: Record<string, Project[]> = {
     },
     {
       slug: "bazar-home",
+      layout: "editorial",
       title: "Bazar Home",
       place: "Residential",
       year: "",
@@ -132,16 +134,35 @@ export const projectsByCategory: Record<string, Project[]> = {
         "/projects/residential/bazarhome/a3.jpeg",
       ],
     },
+    {
+      slug: "home",
+      layout: "grid",
+      title: "Home",
+      place: "Residential",
+      year: "",
+      blurb: "A family house in brick and board-marked concrete.",
+      description:
+        "A residential house organised behind a long horizontal canopy. Brick and concrete are held in clear bands across the elevation, with the entrance stair and its lit threshold set at the centre of the composition.",
+      cover: "/projects/residential/home/front elevation'.png",
+      gallery: [
+        "/projects/residential/home/front elevation'.png",
+        "/projects/residential/home/WhatsApp Image 2026-08-29 at 3.53.35 AM.jpeg",
+        "/projects/residential/home/WhatsApp Image 2026-08-29 at 3.53.36 AM.jpeg",
+        "/projects/residential/home/WhatsApp Image 2026-08-29 at 3.53.36 AM (1).jpeg",
+        "/projects/residential/home/WhatsApp Image 2026-08-29 at 3.54.03 AM.jpeg",
+      ],
+    },
   ],
   others: [
     {
       slug: "nca",
+      layout: "diptych",
       title: "NCA",
       place: "Institutional",
       year: "",
-      blurb: "An institutional project for the National College of Arts.",
+      blurb: "A top-lit hall of stairs and landings for the National College of Arts.",
       description:
-        "An institutional project developed for the National College of Arts. The full set of plates is shown below.",
+        "An institutional project for the National College of Arts, built around a central hall lit from a coffered roof. Stairs and landings cross the volume at every level, turning circulation into the place where work is shown. Outside, low terracotta walls hold the lawn against the older college buildings.",
       cover: "/projects/institutional/nca/nca1.jpeg",
       gallery: [
         "/projects/institutional/nca/nca1.jpeg",
@@ -160,6 +181,7 @@ export const projectsByCategory: Record<string, Project[]> = {
     },
     {
       slug: "un-main-court",
+      layout: "editorial",
       title: "UN Main Court",
       place: "Institutional",
       year: "",
@@ -177,12 +199,13 @@ export const projectsByCategory: Record<string, Project[]> = {
     },
     {
       slug: "art-gallery",
+      layout: "editorial",
       title: "Art Gallery",
       place: "Institutional",
       year: "",
-      blurb: "An institutional art gallery shaped around light and procession.",
+      blurb: "A gallery grafted onto an existing arcaded building.",
       description:
-        "An institutional project developed for an art gallery. The plates explore how daylight, circulation and proportion are tuned to the experience of viewing work.",
+        "A gallery set into and above an existing arcaded building. The plates run from plan and section to massing studies, following the route from the arcade below up into the top-lit rooms, with the lift and a sitting space held to one edge.",
       cover: "/projects/institutional/artgallery/1.jpeg",
       gallery: [
         "/projects/institutional/artgallery/1.jpeg",
@@ -196,14 +219,14 @@ export const projectsByCategory: Record<string, Project[]> = {
   "special-planning": [
     {
       slug: "sacred-geometry",
+      layout: "editorial",
       title: "Sacred Geometry",
       place: "Special Planning",
       year: "",
       blurb: "Geometry as a generative language for inhabited space.",
       description:
-        "A studio investigation into proportion, symmetry, and the underlying geometric patterns that organise architecture — from the scale of a single room to a village fabric.",
+        "A studio investigation into proportion, symmetry, and the underlying geometric patterns that organise architecture, from the scale of a single room up to a village fabric.",
       cover: "/projects/specialplanning/sacredgeometry/backdesign/s4.png",
-      display: "natural",
       gallery: [
         "/projects/specialplanning/sacredgeometry/backdesign/s4.png",
         "/projects/specialplanning/sacredgeometry/backdesign/t1.jpeg",
@@ -220,14 +243,14 @@ export const projectsByCategory: Record<string, Project[]> = {
     },
     {
       slug: "the-intellectual-spine",
+      layout: "diptych",
       title: "The Intellectual Spine",
       place: "Special Planning",
       year: "",
       blurb: "Modular studies of bridges and undergrounds along a shared spine.",
       description:
-        "A modular exploration organised along a single spine — studying how repeating geometric units assemble into bridges above and circulation below, and how the two register against one another.",
+        "A modular exploration organised along a single spine, studying how repeating geometric units assemble into bridges above and circulation below, and how the two register against one another.",
       cover: "/projects/specialplanning/sacredgeometry/theintelectualspine/bridges/m1.jpeg",
-      display: "natural",
       sections: [
         {
           title: "Bridges",
@@ -270,14 +293,14 @@ export const projectsByCategory: Record<string, Project[]> = {
   "urban-planning": [
     {
       slug: "panahgah",
+      layout: "cinematic",
       title: "Panahgah",
       place: "Urban Planning",
       year: "",
       blurb: "A shelter proposal read at the scale of the city block.",
       description:
-        "An urban proposal for Panahgah — a place of shelter. The plates move from master plan and detail plans through exploded axonometrics and sections to the spatial views that test the proposal at eye level.",
+        "An urban proposal for Panahgah, a place of shelter. The plates move from master plan and detail plans through exploded axonometrics and sections to the spatial views that test the proposal at eye level.",
       cover: "/projects/urban/panahgah/PANAHGAH FINAL PRE.jpg",
-      display: "natural",
       gallery: [
         "/projects/urban/panahgah/PANAHGAH FINAL PRE.jpg",
         "/projects/urban/panahgah/MASTER PLAN.jpg",
@@ -316,9 +339,8 @@ export const projectsByCategory: Record<string, Project[]> = {
       year: "",
       blurb: "Anarkali's foot street, read as existing condition and proposal.",
       description:
-        "An urban study of Anarkali that pedestrianises the foot street. The drawings are set out as a direct comparison — the existing condition on one side, the proposed intervention on the other — across plan, axonometric, section and the street-level electrical system.",
+        "An urban study of Anarkali that pedestrianises the foot street. The drawings are set out as a direct comparison, the existing condition on one side and the proposed intervention on the other, across plan, axonometric, section and the street-level electrical system.",
       cover: "/projects/urban/pedestrianzing_anarkali/proposed/1.png",
-      display: "natural",
       compare: {
         before: {
           title: "Existing",
@@ -355,6 +377,7 @@ export const projectsByCategory: Record<string, Project[]> = {
     },
     {
       slug: "reimaging-co-existance",
+      layout: "diptych",
       title: "Reimaging Co Existance",
       place: "Urban Planning",
       year: "",
@@ -362,7 +385,6 @@ export const projectsByCategory: Record<string, Project[]> = {
       description:
         "An urban proposal that reimagines co-existence between productive landscapes and settlement. The master plans and axonometric models set agriculture, livestock, textile and workshop programmes alongside the shared centre and its parking.",
       cover: "/projects/urban/reimaging co existance/masterplan.png",
-      display: "natural",
       gallery: [
         "/projects/urban/reimaging co existance/masterplan.png",
         "/projects/urban/reimaging co existance/MASTEER PLEEN.jpg",
@@ -392,12 +414,13 @@ export const projectsByCategory: Record<string, Project[]> = {
   fashion: [
     {
       slug: "fashion-design",
+      layout: "diptych",
       title: "Fashion Design",
       place: "Fashion",
       year: "",
-      blurb: "Garment studies carrying the studio's geometry into cloth.",
+      blurb: "Team kit design: crests, numbering and pattern work.",
       description:
-        "A fashion design series by the studio. The same interest in proportion, structure and silhouette that shapes our buildings is worked out here at the scale of the body.",
+        "A series of team kits designed by the studio, each drawn front and back. Crest, name block and numbering are set against pattern work that runs from flat colour and checks to contour fields and traditional woven borders.",
       cover: "/projects/fashiondesign/1.jpeg",
       gallery: [
         "/projects/fashiondesign/1.jpeg",
@@ -419,14 +442,14 @@ export const projectsByCategory: Record<string, Project[]> = {
     },
     {
       slug: "furniture-design",
+      layout: "diptych",
       title: "Furniture Design",
       place: "Fashion",
       year: "",
-      blurb: "Walls, frames and fittings — from working drawing to render.",
+      blurb: "Walls, frames and fittings, from working drawing to render.",
       description:
         "A furniture and fitted-joinery series developed for interiors of the studio's own projects. Shown as finished visuals alongside the working drawings that set out each wall, frame and module.",
       cover: "/projects/furnituredesign/visuals/1.png",
-      display: "natural",
       sections: [
         {
           title: "Visuals",

@@ -1,153 +1,148 @@
-# Ph.G Studio — Website
+# Ph.G Studio, Website
 
 The official website for **Ph.G Studio** (Phenomenological Geometry), an
 interdisciplinary architecture and design practice founded by Ar. Hammad
-Hussain. The site is a single-page application with server-side rendering,
-built on TanStack Start.
+Hussain. Server-rendered React on TanStack Start.
 
 Live pages:
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Hero slideshow, design philosophy (the four Ph.G pillars), featured projects |
-| `/projects` | Filterable gallery (All / Commercial / Residential / Institutional) |
-| `/projects/commercial` | Commercial projects grid |
-| `/projects/residential` | Residential projects grid |
-| `/projects/others` | Institutional / public projects grid |
-| `/projects/$category/$slug` | Individual project page with gallery |
+| `/` | Hero slideshow, philosophy with the 3D armature, two travelling project strips |
+| `/projects?cat=…` | Filterable gallery, the active filter lives in the URL |
+| `/projects/$category/$slug` | Project page, full-bleed hero then a per-project gallery layout |
+| `/thinking` | Brainstorming folders, Spatial Experimentation, PDF writings |
+| `/thinking/$slug` | A thinking project's collections |
+| `/thinking/$slug/$sub` | One collection's plates |
 | `/about` | Services and design process |
-| `/people` | Team (architects, directors, collaborators) |
-| `/contact` | Studio contact info + working enquiry form |
+| `/people` | Team |
+| `/contact` | Studio contact info + Web3Forms enquiry form |
 
 ## Tech stack
 
-- **[TanStack Start](https://tanstack.com/start)** — full-stack React framework
-  (SSR via Nitro, file-based routing via TanStack Router)
-- **React 19** + **TypeScript 5**
-- **Vite 7** with the [`@lovable.dev/vite-tanstack-config`](https://www.npmjs.com/package/@lovable.dev/vite-tanstack-config)
-  preset (auto-wires React, Tailwind, tsconfig paths, Nitro, error logging)
-- **Tailwind CSS v4** with a custom editorial palette in OKLCH
-  (cream / ink / clay / stone) plus `tw-animate-css`
-- **TanStack Query** (provider wired in, ready for data fetching)
-- **Web3Forms** for contact-form delivery (no backend required)
-
-## Prerequisites
-
-- **Node.js ≥ 20** (tested on Node 24)
-- **npm ≥ 10**
+- **[TanStack Start](https://tanstack.com/start)**, SSR via Nitro, file-based routing
+- **React 19** + **TypeScript 5**, **Vite 7** with the
+  [`@lovable.dev/vite-tanstack-config`](https://www.npmjs.com/package/@lovable.dev/vite-tanstack-config) preset
+- **Tailwind CSS v4**, custom editorial palette in OKLCH (cream / ink / clay / stone)
+- **Motion** for view transitions and the category underline
+- **three.js / React Three Fiber** for the one 3D moment on the home page
+- **sharp** for the build-time image pipeline (a runtime dependency: the deploy
+  host needs it during `prebuild`)
+- **Web3Forms** for contact-form delivery (no backend)
 
 ## Getting started
 
-```powershell
-# 1. Install dependencies
+```bash
 npm install
-
-# 2. Start the dev server (port 8080)
-npm run dev
+npm run images   # generate image derivatives (first run ~20 min, then incremental)
+npm run dev      # http://localhost:8080
 ```
-
-Then open <http://localhost:8080/>.
-
-### Available scripts
 
 | Command | What it does |
 | --- | --- |
-| `npm run dev` | Vite dev server with HMR on <http://localhost:8080> |
-| `npm run build` | Production build (client + SSR) into `dist/` |
-| `npm run build:dev` | Production build in development mode (un-minified, source maps) |
-| `npm run preview` | Serve the production build locally |
-| `npm run lint` | ESLint (TypeScript + React rules) |
-| `npm run format` | Prettier write |
+| `npm run dev` | Dev server with HMR on <http://localhost:8080> |
+| `npm run images` | Regenerate image derivatives into `public/_opt` |
+| `npm run build` | Production build (runs `images` first via `prebuild`) |
+| `npm run preview` | Serve the production build |
+| `npm run lint` | ESLint |
 
-## Project structure
+## Images, read this before adding any
 
-```
-src/
-├── assets/                  # Hero & project images (imported, fingerprinted by Vite)
-├── components/
-│   ├── site-header.tsx      # Fixed top navigation
-│   └── site-footer.tsx      # Studio info, social links
-├── lib/
-│   ├── error-capture.ts     # Captures unhandled errors for SSR recovery
-│   ├── error-page.ts        # HTML fallback when SSR crashes
-│   ├── lovable-error-reporting.ts  # Forwards client errors to Lovable
-│   └── projects-data.ts     # Static project catalog (by category)
-├── routes/                  # File-based routes (TanStack Router conventions)
-│   ├── __root.tsx           # App shell: <head>, providers, error/404 boundaries
-│   ├── index.tsx            # `/`
-│   ├── about.tsx            # `/about`
-│   ├── people.tsx           # `/people`
-│   ├── contact.tsx          # `/contact` — Web3Forms-powered form
-│   ├── projects.tsx         # `/projects`
-│   ├── projects.commercial.tsx
-│   ├── projects.residential.tsx
-│   ├── projects.others.tsx
-│   └── projects.$category.$slug.tsx   # Dynamic project detail
-├── router.tsx               # Router factory (QueryClient context, scroll restoration)
-├── routeTree.gen.ts         # Auto-generated — do NOT edit by hand
-├── server.ts                # SSR entry (h3 error normalisation)
-├── start.ts                 # createStart() with request-scoped error middleware
-└── styles.css               # Tailwind v4 setup + theme tokens
-```
+Source images live in `public/`, many of them very large (the archive has
+originals up to 35 MB). **Nothing serves originals.** `npm run images` walks
+`public/`, writes an AVIF + WebP ladder (240–2400px) into `public/_opt`, and
+records dimensions and a placeholder colour into `src/lib/image-manifest.json`.
 
-### Routing conventions (TanStack Router file-based)
+- Derivatives are named by **content hash**, so filenames with spaces, brackets
+  or non-ASCII characters need no URL encoding, and the files cache forever.
+- `public/_opt` is **gitignored** and regenerated on the deploy host.
+- Always render content images with **`<Plate>`** (`src/components/plate.tsx`),
+  never a bare `<img>`, a bare tag pointed at `public/` serves the original.
+- After dropping new images into `public/`, run `npm run images`.
 
-| File | URL |
+### Scripts
+
+| Script | Purpose |
 | --- | --- |
-| `index.tsx` | `/` |
-| `about.tsx` | `/about` |
-| `projects.$category.$slug.tsx` | `/projects/:category/:slug` (dynamic) |
-| `__root.tsx` | root layout — wraps every page; preserve `<Outlet />` |
+| `scripts/optimize-images.mjs` | The pipeline above. Run via `npm run images`, and automatically by `prebuild`. |
+| `scripts/report-payload.mjs` | Prints the weight of every project page, before and after optimisation. |
+| `scripts/move-unused.mjs` | Lists files under `public/` that nothing references. Pass `--apply` to move them into `unused/`. Always dry-run first. |
 
-`routeTree.gen.ts` is regenerated automatically by the TanStack Router Vite
-plugin while the dev server is running.
+Run the last two with `node --experimental-strip-types scripts/<name>.mjs`.
+
+### unused/
+
+Source material the site does not reference lives in `unused/` at the repo root,
+outside `public/` so it is never served or deployed. It is gitignored: the files
+sit on disk only. Delete the folder when you are confident you no longer want
+them.
 
 ## Editing content
 
 | Content | File |
 | --- | --- |
-| Featured projects on the homepage | `src/routes/index.tsx` (`featured` array) |
-| Pillars / philosophy copy | `src/routes/index.tsx` (`pillars` array) |
-| Services & design-process steps | `src/routes/about.tsx` |
-| Team members | `src/routes/people.tsx` (`team` array) |
-| Project catalog (gallery + categories) | `src/lib/projects-data.ts` |
-| Contact details (email, WhatsApp, socials) | `src/routes/contact.tsx` and `src/components/site-footer.tsx` |
-| Theme colors | `src/styles.css` (`:root` OKLCH variables) |
+| Project catalog, categories, tab order | `src/lib/projects-data.ts` |
+| Thinking collections and PDF writings | `src/lib/thinking-data.ts` |
+| Pillars / philosophy copy | `src/routes/index.tsx` (`pillars`) |
+| Services & design process | `src/routes/about.tsx` |
+| Team members | `src/routes/people.tsx` (`team`) |
+| Contact details, socials | `src/routes/contact.tsx`, `src/components/site-footer.tsx` |
+| Theme + motion tokens | `src/styles.css` |
+| Home hero plates | `public/projects/home/` + `slides` in `src/routes/index.tsx` |
 
-To add a new project image, drop it into `src/assets/`, import it in
-`src/lib/projects-data.ts`, and reference it in the desired category array.
+### Adding a project
+
+Add an entry to the right category array in `src/lib/projects-data.ts`. Every
+project declares a `layout` that suits its material:
+
+| Layout | For |
+| --- | --- |
+| `grid` | photographed interiors, uniform 4:3, cropped |
+| `diptych` | drawings and renders, two-up, never cropped |
+| `editorial` | a few strong plates, offset, diagonal rhythm |
+| `contact-sheet` | large sketch sets, dense masonry |
+| `cinematic` | the hero project, full-measure plates among pairs |
+
+Use `sections` for named sub-groups and `compare` for before/after columns
+(see Pedestrianizing Anarkali). New categories go in the `categories` tuple and
+`categoryLabel` map in the same file, the tabs are generated from them.
+
+## Development tooling
+
+`.mcp.json` registers the Playwright MCP server, which lets an AI assistant open
+the site and screenshot it while working. Not needed to build or run the site.
+
+## Design system
+
+`.claude/skills/phg-design/SKILL.md` holds the palette, type scale, motion
+tokens, image rules and layout catalog, plus the list of effects deliberately
+rejected. Read it before changing any page.
 
 ## Contact form (Web3Forms)
 
-The enquiry form on `/contact` submits to **[Web3Forms](https://web3forms.com)**
-via a public access key — no server, no SMTP setup.
-
-- Access key lives in [`src/routes/contact.tsx`](src/routes/contact.tsx) as
-  `WEB3FORMS_ACCESS_KEY`. The key is **not a secret** (it's domain-scoped on
-  the Web3Forms dashboard) so it is safe to commit.
-- A hidden honeypot `botcheck` checkbox filters out most bots.
-- Delivery destination, daily limit, and allowed referer domains are managed
-  on the Web3Forms dashboard (form name: `Hammad_arch`).
-
-**When you deploy:** edit the form on Web3Forms and replace the `localhost`
-domain with the production hostname (e.g. `phgstudio.com`). The access key
-itself does not change.
-
-## Theme & typography
-
-- Palette is defined in OKLCH in `src/styles.css` (cream background, ink text,
-  clay accent, stone muted) — change once, propagated everywhere.
-- Display font: **Instrument Serif** (Google Fonts, preloaded in `__root.tsx`)
-- Body font: **Inter**
-- Custom utilities: `font-display`, `font-label`, `hairline`
+`/contact` submits to **[Web3Forms](https://web3forms.com)** via a public access
+key in `src/routes/contact.tsx`. The key is domain-scoped and safe to commit; a
+hidden `botcheck` honeypot filters bots. **When you deploy:** replace the
+`localhost` domain on the Web3Forms dashboard with the production hostname.
 
 ## Deployment
 
-`@lovable.dev/vite-tanstack-config` wires **Nitro** with Cloudflare as the
-default deploy target. Run `npm run build` and deploy the contents of `dist/`
-according to your provider's instructions (Cloudflare Workers, Node server,
-etc.). The SSR entry is `src/server.ts`.
+Nitro targets **Vercel** by default (override with `NITRO_PRESET`).
+
+`public/_opt` is **not** committed. `npm run build` runs `prebuild` first, which
+regenerates every derivative from `public/`, so a cold deploy spends roughly 20
+minutes encoding before the app build starts. Nothing else is required: the
+folder appears on the server as part of the build.
+
+If that wait becomes a problem, un-ignore `public/_opt` and commit it. Deploys
+then become instant, at the cost of ~150 MB in the repository.
+
+Derivatives under `/_opt` are served with a one-year immutable cache header,
+which is safe because their filenames are content hashes.
+
+**Before the first deploy:** add the production domain in the Web3Forms
+dashboard, or contact-form submissions will stop silently.
 
 ## License
 
-Private — © 2026 Ph.G Studio. All rights reserved.
+Private, © 2026 Ph.G Studio. All rights reserved.

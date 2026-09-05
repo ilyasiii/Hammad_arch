@@ -1,7 +1,11 @@
-import { createFileRoute, Link, notFound, useRouter } from "@tanstack/react-router";
+import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { assetUrl } from "@/lib/assets";
+import { Gallery } from "@/components/gallery";
+import { Plate } from "@/components/plate";
+import { Reveal } from "@/components/reveal";
+import { BackLink, RouteNotFound } from "@/components/back-link";
+import { useGoBack } from "@/lib/use-go-back";
 import {
   projectsByCategory,
   categoryLabel,
@@ -11,63 +15,67 @@ import {
 
 export const Route = createFileRoute("/projects/$category/$slug")({
   head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug} Ph. G studio` },
-    ],
+    meta: [{ title: `${params.slug} Ph. G studio` }],
   }),
   component: ProjectDetail,
   notFoundComponent: () => (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
-      <div className="mx-auto max-w-[1200px] px-6 pt-40 md:px-10">
-        <h1 className="font-display text-4xl">Project not found.</h1>
-        <Link to="/" className="mt-6 inline-block underline">Return home</Link>
-      </div>
+      <RouteNotFound backTo="/projects" backLabel="Back to Projects" />
       <SiteFooter />
     </div>
   ),
 });
 
-/** Uniform 4:3 grid — photography. */
-function CroppedGrid({ images, alt }: { images: string[]; alt: string }) {
+/**
+ * Every project opens the same way: the cover fills the viewport and the title
+ * sits over it.
+ *
+ * Earlier this varied per project, a split treatment with a second plate
+ * overlapping the cover, and a stacked monograph treatment. Both were dropped
+ * in favour of one consistent opening; the plates themselves already differ
+ * enough from project to project.
+ */
+function ProjectHero({
+  project,
+  category,
+  onBack,
+}: {
+  project: Project;
+  category: string;
+  onBack: () => void;
+}) {
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-      {images.map((src, i) => (
-        <div key={src} className="aspect-[4/3] overflow-hidden bg-muted">
-          <img
-            src={assetUrl(src)}
-            alt={`${alt} ${i + 1}`}
-            loading="lazy"
-            className="h-full w-full object-cover"
-          />
+    <section className="relative mt-16 min-h-[68svh] w-full overflow-hidden bg-ink">
+      <div className="absolute inset-0" style={{ viewTransitionName: `project-cover-${project.slug}` }}>
+        <Plate src={project.cover} alt={project.title} fill sizes="100vw" priority />
+      </div>
+
+      {/* Two washes, sized for the worst case rather than the best. Several
+          covers are white-ground plans and line drawings, not dark photographs
+         , on those, weaker gradients left the title and back link floating on
+          near-white and effectively unreadable. */}
+      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/90 via-ink/55 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ink/75 to-transparent" />
+
+      <div className="relative mx-auto flex min-h-[68svh] max-w-[1400px] flex-col justify-between px-6 py-10 md:px-10">
+        {/* On a frosted chip: several covers are white-ground plans where
+            cream text on a gradient alone was still unreadable. */}
+        <BackLink label={categoryLabel[category] ?? category} onClick={onBack} dark />
+        <div>
+          <h1
+            className="font-display max-w-4xl text-4xl text-cream md:text-6xl"
+            style={{ viewTransitionName: `project-title-${project.slug}` }}
+          >
+            {project.title}
+          </h1>
+          <p className="font-label mt-4 text-cream/70">
+            {project.place}
+            {project.year ? ` · ${project.year}` : ""}
+          </p>
         </div>
-      ))}
-    </div>
-  );
-}
-
-/** Masonry at natural aspect ratio — plans, sections and drawings are never cropped. */
-function NaturalGrid({ images, alt }: { images: string[]; alt: string }) {
-  return (
-    <div className="columns-1 gap-6 md:columns-2 [&>*]:mb-6 [&>*]:break-inside-avoid">
-      {images.map((src, i) => (
-        <img
-          key={src}
-          src={assetUrl(src)}
-          alt={`${alt} ${i + 1}`}
-          loading="lazy"
-          className="block h-auto w-full bg-muted"
-        />
-      ))}
-    </div>
-  );
-}
-
-function Gallery({ images, project }: { images: string[]; project: Project }) {
-  return project.display === "natural" ? (
-    <NaturalGrid images={images} alt={project.title} />
-  ) : (
-    <CroppedGrid images={images} alt={project.title} />
+      </div>
+    </section>
   );
 }
 
@@ -83,18 +91,18 @@ function CompareColumns({ before, after }: { before: ProjectSection; after: Proj
         <div key={column.title}>
           <div className="sticky top-16 z-20 border-b border-border bg-background/95 py-3 backdrop-blur">
             <p className="font-label text-clay">
-              {idx === 0 ? "Before" : "After"} — {column.title}
+              {idx === 0 ? "Before" : "After"}: {column.title}
             </p>
           </div>
           <div className="mt-6 space-y-6">
             {column.images.map((src, i) => (
-              <img
-                key={src}
-                src={assetUrl(src)}
-                alt={`${column.title} ${i + 1}`}
-                loading="lazy"
-                className="block h-auto w-full bg-muted"
-              />
+              <Reveal key={src} index={i}>
+                <Plate
+                  src={src}
+                  alt={`${column.title} ${i + 1}`}
+                  sizes="(min-width: 768px) 44vw, 92vw"
+                />
+              </Reveal>
             ))}
           </div>
         </div>
@@ -111,53 +119,45 @@ function ProjectDetail() {
   const project = list.find((p) => p.slug === slug);
   if (!project) throw notFound();
 
-  const goBack = () => {
-    // If the user landed here directly (no history), fall back to /projects.
-    if (window.history.length > 1) {
-      router.history.back();
-    } else {
-      router.navigate({ to: "/projects", search: { cat: category } as never });
-    }
-  };
+  const goBack = useGoBack(() =>
+    router.navigate({ to: "/projects", search: { cat: category } as never }),
+  );
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
 
-      <section className="mx-auto max-w-[1400px] px-6 pt-32 pb-10 md:px-10">
-        <button
-          type="button"
-          onClick={goBack}
-          className="font-label text-muted-foreground hover:text-foreground"
-        >
-          ← {categoryLabel[category] ?? category}
-        </button>
-        <h1 className="font-display mt-6 text-4xl md:text-6xl">{project.title}</h1>
-        <p className="mt-2 text-muted-foreground italic">
-          {project.place}
-          {project.year ? ` · ${project.year}` : ""}
-        </p>
-        <p className="mt-6 max-w-2xl text-foreground/80">{project.description}</p>
+      <ProjectHero project={project} category={category} onBack={goBack} />
+
+      {/* The hero has no room for the description, so it lands here. */}
+      <section className="mx-auto max-w-[1400px] px-6 pt-16 md:px-10">
+        <Reveal>
+          <p className="max-w-2xl text-lg leading-relaxed text-foreground/80">
+            {project.description}
+          </p>
+        </Reveal>
       </section>
 
       {project.compare && (
-        <section className="mx-auto max-w-[1400px] px-6 pb-20 md:px-10">
+        <section className="mx-auto mt-20 max-w-[1400px] px-6 pb-4 md:px-10">
           <CompareColumns before={project.compare.before} after={project.compare.after} />
         </section>
       )}
 
       {project.sections?.map((section) => (
-        <section key={section.title} className="mx-auto max-w-[1400px] px-6 pb-20 md:px-10">
-          <div className="mb-8 border-t border-border pt-6">
-            <h2 className="font-display text-3xl md:text-4xl">{section.title}</h2>
-          </div>
-          <Gallery images={section.images} project={project} />
+        <section key={section.title} className="mx-auto mt-20 max-w-[1400px] px-6 md:px-10">
+          <Reveal>
+            <div className="mb-10 border-t border-border pt-6">
+              <h2 className="font-display text-3xl md:text-4xl">{section.title}</h2>
+            </div>
+          </Reveal>
+          <Gallery images={section.images} layout={project.layout} alt={section.title} />
         </section>
       ))}
 
       {project.gallery && project.gallery.length > 0 && (
-        <section className="mx-auto max-w-[1400px] px-6 pb-24 md:px-10">
-          <Gallery images={project.gallery} project={project} />
+        <section className="mx-auto mt-20 max-w-[1400px] px-6 md:px-10">
+          <Gallery images={project.gallery} layout={project.layout} alt={project.title} />
         </section>
       )}
 

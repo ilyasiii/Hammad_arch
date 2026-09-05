@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { Reveal, RevealText } from "@/components/reveal";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -25,6 +26,7 @@ const serviceGroups = [
       "Commercial Projects",
       "Institutional Projects",
       "Landscape Design",
+      "Construction Supervision",
     ],
   },
   {
@@ -72,53 +74,76 @@ function About() {
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
 
-      <section className="mx-auto max-w-[1600px] px-6 pt-32 pb-12 md:px-10">
+      <section className="mx-auto max-w-[1600px] px-6 pt-32 pb-16 md:px-10">
         <p className="font-label text-muted-foreground">§ About us</p>
-        <h1 className="font-display mt-6 text-6xl md:text-8xl">
-          Our Services & <br />
-          <em className="text-clay">Design Process.</em>
-        </h1>
+        <RevealText as="h1" className="font-display mt-8 max-w-4xl text-4xl md:text-6xl">
+          Our services & <em className="text-clay">design process.</em>
+        </RevealText>
       </section>
 
-
       {/* Services */}
-      <section className="mx-auto max-w-[1600px] px-6 pb-20 md:px-10">
+      <section className="mx-auto max-w-[1600px] px-6 pb-24 md:px-10">
         <div className="grid grid-cols-1 gap-12 border-t border-border pt-12 md:grid-cols-12">
           <div className="md:col-span-4">
-            <p className="font-label text-clay">§ Services</p>
-            <h2 className="font-display mt-4 text-4xl md:text-5xl">What we do.</h2>
+            <div className="md:sticky md:top-28">
+              <p className="font-label text-clay">§ Services</p>
+              <h2 className="font-display mt-4 text-4xl md:text-5xl">What we do.</h2>
+            </div>
           </div>
-          <div className="md:col-span-8 space-y-10">
-            {serviceGroups.map((g) => (
-              <div key={g.heading} className="border-t border-border pt-6">
+          <div className="space-y-12 md:col-span-8">
+            {serviceGroups.map((g, i) => (
+              <Reveal key={g.heading} index={i} className="border-t border-border pt-6">
                 <h3 className="font-display text-2xl md:text-3xl">{g.heading}</h3>
-                <ul className="mt-4 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
+                <ul className="mt-5 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
                   {g.items.map((it) => (
-                    <li key={it} className="text-foreground/80">{it}</li>
+                    <li key={it} className="flex gap-3 text-foreground/80">
+                      <span aria-hidden="true" className="text-clay/50">·</span>
+                      {it}
+                    </li>
                   ))}
                 </ul>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* Process */}
-      <section className="mx-auto max-w-[1600px] px-6 pb-28 md:px-10">
+      <section className="mx-auto max-w-[1600px] px-6 pb-24 md:px-10">
         <div className="grid grid-cols-1 gap-12 border-t border-border pt-12 md:grid-cols-12">
           <div className="md:col-span-4">
-            <p className="font-label text-clay">§ Design Process</p>
-            <h2 className="font-display mt-4 text-4xl md:text-5xl">From brief to building.</h2>
+            <div className="md:sticky md:top-28">
+              <p className="font-label text-clay">§ Design Process</p>
+              <h2 className="font-display mt-4 text-4xl md:text-5xl">From brief to building.</h2>
+            </div>
           </div>
-          <ol className="md:col-span-8 grid grid-cols-1 gap-px bg-border sm:grid-cols-2">
-            {process.map((s) => (
-              <li key={s.n} className="bg-background p-6">
+          <ol className="grid grid-cols-1 gap-px bg-border sm:grid-cols-2 md:col-span-8">
+            {process.map((s, i) => (
+              <Reveal key={s.n} index={i} as="li" className="bg-background p-8">
                 <p className="font-label text-clay">Nº {s.n}</p>
-                <h3 className="font-display mt-3 text-2xl">{s.title}</h3>
-                <p className="mt-3 text-foreground/75 leading-relaxed">{s.body}</p>
-              </li>
+                <h3 className="font-display mt-4 text-2xl">{s.title}</h3>
+                <p className="mt-3 leading-relaxed text-foreground/75">{s.body}</p>
+              </Reveal>
             ))}
           </ol>
+        </div>
+      </section>
+
+      {/* Close */}
+      <section className="mx-auto max-w-[1600px] px-6 pb-32 md:px-10">
+        <div className="flex flex-wrap items-end justify-between gap-6 border-t border-border pt-12">
+          <h2 className="font-display max-w-2xl text-4xl md:text-5xl">
+            Have a project in mind?
+          </h2>
+          <Link
+            to="/contact"
+            className="font-label group text-muted-foreground transition-colors hover:text-clay"
+          >
+            Start a conversation{" "}
+            <span className="inline-block transition-transform duration-[var(--dur-fast)] group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
         </div>
       </section>
 

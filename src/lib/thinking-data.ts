@@ -1,11 +1,17 @@
+import type { GalleryLayout } from "./gallery-layout";
+
 export type ThinkingCollection = {
   slug: string;
   title: string;
   cover: string;
   gallery: string[];
+  /** Shown above the plates. The folders hold very different material. */
+  description?: string;
+  /** How the plates are presented, see gallery-layout.ts. */
+  layout?: GalleryLayout;
 };
 
-export type ThinkingProject = {
+type ThinkingProject = {
   slug: string;
   title: string;
   blurb: string;
@@ -14,11 +20,11 @@ export type ThinkingProject = {
   collections: ThinkingCollection[];
 };
 
-export type ThinkingPdf = { title: string; href: string };
+type ThinkingPdf = { title: string; href: string };
 
-// NOTE: paths are RAW on-disk paths under public/ — render sites wrap them in
+// NOTE: paths are RAW on-disk paths under public/, render sites wrap them in
 // assetUrl() (src/lib/assets.ts), so spaces and non-ASCII names are fine here.
-// The public/ folder is "Thinking" (capital T) — matches Linux case-sensitivity
+// The public/ folder is "Thinking" (capital T), matches Linux case-sensitivity
 // on Vercel. Collection titles mirror their folder names on disk.
 
 const BRAINSTORMING = "/Thinking/brainstorming";
@@ -27,14 +33,17 @@ export const thinkingProjects: ThinkingProject[] = [
   {
     slug: "brainstorming",
     title: "Brainstorming",
-    blurb: "Sketches, diagrams and ideation studies from the studio's notebooks.",
+    blurb: "Sketchbooks, study models and boards from work in progress.",
     description:
-      "Working folders of brainstorming material — early sketches, spatial studies and conceptual diagrams produced while developing projects. Each folder follows one line of thinking from first mark to resolved idea.",
+      "Four working folders. Hand sketches and annotated plans, coloured master plans, site models in card and plaster, and the boards these were presented on. Each folder follows one line of thinking from the first mark to the reviewed proposal.",
     cover: `${BRAINSTORMING}/the intellectual spine/title.png`,
     collections: [
       {
         slug: "the-intellectual-spine",
+        layout: "diptych",
         title: "The Intellectual Spine",
+        description:
+          "A spine threaded through a series of campuses and institutions, tested in card and plaster massing models, coloured master plans and painted site studies.",
         cover: `${BRAINSTORMING}/the intellectual spine/title.png`,
         gallery: [
           `${BRAINSTORMING}/the intellectual spine/title.png`,
@@ -57,7 +66,10 @@ export const thinkingProjects: ThinkingProject[] = [
       },
       {
         slug: "reimagening-co-existing",
+        layout: "contact-sheet",
         title: "Reimagening Co Existing",
+        description:
+          "A speculative scenario: fuel exhausted, piped water and sewage gone, the grid down. The folder works through what settles in that vacuum, from governance models for a community to the boards the proposal was presented on.",
         cover: `${BRAINSTORMING}/reimagening co existing/IMG-20241214-WA0034.jpg`,
         gallery: [
           `${BRAINSTORMING}/reimagening co existing/IMG-20241214-WA0034.jpg`,
@@ -111,7 +123,10 @@ export const thinkingProjects: ThinkingProject[] = [
       },
       {
         slug: "ravi",
+        layout: "contact-sheet",
         title: "Ravi",
+        description:
+          "Thirty three sketchbook pages. Quick pencil and charcoal studies alongside annotated plans that set out living and sleeping space against cattle, poultry and the working yard.",
         cover: `${BRAINSTORMING}/ravi/SKETCHES/IMG-20250527-WA0005.jpg`,
         // 33 sketches, IMG-20250527-WA0005 … WA0037
         gallery: Array.from(
@@ -122,7 +137,10 @@ export const thinkingProjects: ThinkingProject[] = [
       },
       {
         slug: "home-with-jama",
+        layout: "diptych",
         title: "Home with Jama",
+        description:
+          "A study of the Jama, the shared forecourt in front of two or three homes in Shublan, Parachinar. It works as a community hub and baitak, and is given over to weddings and funerals. These sheets record the site and set out how that space might be shaped.",
         cover: `${BRAINSTORMING}/home with jama/IMG-20241219-WA0049.jpg`,
         gallery: [
           `${BRAINSTORMING}/home with jama/IMG-20241219-WA0049.jpg`,
@@ -134,24 +152,25 @@ export const thinkingProjects: ThinkingProject[] = [
     ],
   },
   {
-    slug: "ai-visualization",
-    title: "AI Visualization",
-    blurb: "AI-driven visual studies exploring atmosphere, form and material.",
+    slug: "spatial-experimentation",
+    title: "Spatial Experimentation",
+    blurb: "Visual studies exploring atmosphere, form and material.",
     description:
-      "A set of AI-assisted visualization studies produced by the studio. Each plate explores a different combination of atmosphere, light, and material — used as a thinking tool alongside our drawings.",
-    cover: "/Thinking/ai_visualization/1.jpeg",
+      "A set of spatial studies produced by the studio. Each plate pushes a different combination of atmosphere, light and material further than a drawing would, and is used as a way of thinking through space alongside them.",
+    cover: "/Thinking/Spatial Experimentation/1.jpeg",
     collections: [
       {
         slug: "all",
-        title: "AI Visualization",
-        cover: "/Thinking/ai_visualization/1.jpeg",
+        layout: "grid",
+        title: "Spatial Experimentation",
+        cover: "/Thinking/Spatial Experimentation/1.jpeg",
         gallery: [
-          "/Thinking/ai_visualization/1.jpeg",
-          "/Thinking/ai_visualization/2.jpeg",
-          "/Thinking/ai_visualization/3.jpeg",
-          "/Thinking/ai_visualization/4.jpeg",
-          "/Thinking/ai_visualization/5.jpeg",
-          "/Thinking/ai_visualization/6.jpeg",
+          "/Thinking/Spatial Experimentation/1.jpeg",
+          "/Thinking/Spatial Experimentation/2.jpeg",
+          "/Thinking/Spatial Experimentation/3.jpeg",
+          "/Thinking/Spatial Experimentation/4.jpeg",
+          "/Thinking/Spatial Experimentation/5.jpeg",
+          "/Thinking/Spatial Experimentation/6.jpeg",
         ],
       },
     ],

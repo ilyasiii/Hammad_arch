@@ -7,13 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies and build output
 node_modules
 dist
 dist-ssr
 .output
-.vinxi
-.tanstack/**
 .nitro
+.vinxi
+.tanstack
 .vercel
 *.local
 
@@ -31,3 +32,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Generated image derivatives. Rebuilt by `npm run images`, which the `prebuild`
+# hook runs before every production build, so the deploy host makes its own.
+public/_opt
+
+# Source material the site does not reference, kept on disk by
+# `node scripts/move-unused.mjs` but deliberately out of the repo and the deploy.
+unused
+
+# Local tooling output
+.shots
+.playwright-mcp

@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { Reveal, RevealText } from "@/components/reveal";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -72,18 +73,20 @@ function Contact() {
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
 
-      <section className="mx-auto grid max-w-[1600px] grid-cols-12 gap-8 px-6 pt-40 pb-32 md:px-10">
+      <section className="mx-auto grid max-w-[1600px] grid-cols-12 gap-8 px-6 pt-32 pb-32 md:px-10">
         <div className="col-span-12 md:col-span-6">
           <p className="font-label text-muted-foreground">§ Contact</p>
-          <h1 className="font-display mt-6 text-6xl md:text-9xl">
-            Let's <em className="text-clay">build</em><br />together.
-          </h1>
-          <p className="mt-10 max-w-md text-lg leading-relaxed text-foreground/80">
-            New commissions, collaborations, and conversations are always welcome.
-          </p>
+          <RevealText as="h1" className="font-display mt-8 text-4xl md:text-6xl">
+            Let's <em className="text-clay">build</em> together.
+          </RevealText>
+          <Reveal index={1}>
+            <p className="mt-10 max-w-md text-lg leading-relaxed text-foreground/80">
+              New commissions, collaborations, and conversations are always welcome.
+            </p>
+          </Reveal>
 
-          <dl className="mt-16 space-y-6 text-base">
-            <div>
+          <dl className="mt-16 space-y-6 border-t border-border pt-10 text-base">
+            <Reveal as="div" index={0}>
               <dt className="font-label text-muted-foreground">Email</dt>
               <dd className="mt-1 text-xl">
                 <a
@@ -95,16 +98,16 @@ function Contact() {
                   phgstudio44@gmail.com
                 </a>
               </dd>
-            </div>
-            <div>
+            </Reveal>
+            <Reveal as="div" index={1}>
               <dt className="font-label text-muted-foreground">WhatsApp</dt>
               <dd className="mt-1 text-xl">
                 <a href="https://wa.me/923030444072" target="_blank" rel="noopener noreferrer" className="hover:text-clay">
                   +92 303 0444072
                 </a>
               </dd>
-            </div>
-            <div>
+            </Reveal>
+            <Reveal as="div" index={2}>
               <dt className="font-label text-muted-foreground">Instagram</dt>
               <dd className="mt-1 text-xl">
                 <a
@@ -116,8 +119,8 @@ function Contact() {
                   @ph.g_studio
                 </a>
               </dd>
-            </div>
-            <div>
+            </Reveal>
+            <Reveal as="div" index={3}>
               <dt className="font-label text-muted-foreground">LinkedIn</dt>
               <dd className="mt-1 text-xl">
                 <a
@@ -129,11 +132,11 @@ function Contact() {
                   Ph.G Studio
                 </a>
               </dd>
-            </div>
+            </Reveal>
           </dl>
         </div>
 
-        <div className="col-span-12 md:col-span-6">
+        <div className="col-span-12 md:col-span-5 md:col-start-8">
           {status === "sent" ? (
             <div className="bg-ink text-cream p-12 md:p-16">
               <p className="font-label text-clay">✶ Received</p>

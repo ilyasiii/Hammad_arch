@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { Plate } from "@/components/plate";
 
 const NAV_LINKS = [
   { to: "/thinking", label: "Thinking" },
@@ -11,20 +12,31 @@ const NAV_LINKS = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Solid at the top of the page, frosted once content runs underneath it.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background">
+    <header
+      className={`fixed top-0 right-0 left-0 z-50 border-b transition-colors duration-[var(--dur-base)] ${
+        scrolled || open ? "glass border-transparent" : "border-border bg-background"
+      }`}
+    >
       <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-6 md:px-10">
         <Link
           to="/"
           className="flex items-center gap-2 font-display text-xl leading-none"
           onClick={() => setOpen(false)}
         >
-          <img
-            src="/logo.jpeg"
-            alt="Ph. G studio logo"
-            className="h-9 w-9 rounded-sm object-cover"
-          />
+          <span className="block h-9 w-9 shrink-0 overflow-hidden rounded-sm">
+            <Plate src="/logo.jpeg" alt="Ph. G studio logo" ratio="1/1" sizes="36px" priority />
+          </span>
           <span>
             Ph. G <span className="text-clay italic">studio</span>
           </span>

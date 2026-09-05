@@ -1,6 +1,5 @@
 @import "tailwindcss" source(none);
 @source "../src";
-@import "tw-animate-css";
 
 @theme inline {
   --radius-sm: 2px;
@@ -24,6 +23,12 @@
 
   --font-serif: "Instrument Serif", "Cormorant Garamond", Georgia, serif;
   --font-sans: "Inter", "Helvetica Neue", system-ui, sans-serif;
+
+  /* Motion tokens, see .claude/skills/phg-design. Nothing exceeds 1s. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 200ms;
+  --dur-base: 500ms;
+  --dur-slow: 800ms;
 }
 
 :root {
@@ -66,6 +71,194 @@
     background: var(--clay);
     color: var(--cream);
   }
+
+  /* Honoured globally so no component has to re-implement it: kill entrance
+     motion, hover scaling and view transitions for anyone who asks. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
+  }
+
+  /* The cover→hero morph. Cross-fade rather than the default slide, so a plate
+     appears to settle into place instead of flying. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--dur-base);
+    animation-timing-function: var(--ease-out-expo);
+  }
+}
+
+/* Entrance for revealed blocks. An IntersectionObserver (src/components/reveal.tsx)
+   only flips data-shown; the animation itself lives here in CSS.
+
+   The hidden start state is scoped to `.js`, a class an inline script in
+   __root.tsx puts on <html> before first paint. So if scripting is off or the
+   bundle fails, .reveal never gets a hidden state and the content is simply
+   visible, content can never be stranded by a broken observer. */
+.reveal {
+  transition:
+    opacity var(--dur-slow) var(--ease-out-expo),
+    transform var(--dur-slow) var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.js .reveal[data-shown="false"] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+/* Frosted panels that sit over plates, captions, the header once it leaves the
+   hero, hover chrome. Translucent rather than solid so the photograph stays
+   readable underneath, with a hairline to hold the edge.
+
+   backdrop-filter is a real cost when it covers a large area, so keep these
+   small: chips, bars and captions, never a full-page overlay. */
+.glass {
+  background-color: color-mix(in oklab, var(--cream) 62%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--cream) 45%, transparent);
+}
+
+.glass-dark {
+  background-color: color-mix(in oklab, var(--ink) 42%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--cream) 20%, transparent);
+  color: var(--cream);
+}
+
+/* Where backdrop-filter is unsupported the panel would be a flat wash over the
+   image, so fall back to something opaque enough to stay legible. */
+@supports not (backdrop-filter: blur(4px)) {
+  .glass {
+    background-color: color-mix(in oklab, var(--cream) 88%, transparent);
+  }
+  .glass-dark {
+    background-color: color-mix(in oklab, var(--ink) 78%, transparent);
+  }
+}
+
+/* Plates whose content is pale, white-ground diagrams, line drawings, plans -
+   have no edge against cream and appear to float. A hairline gives every plate
+   a defined boundary regardless of what is inside it. */
+.plate-frame {
+  border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
+  background-color: var(--muted);
+}
+
+/* Travelling strip of projects. The track carries two copies of the items and
+   slides exactly -50%, so the loop point lands the second copy where the first
+   began and the seam never shows.
+
+   Paused on hover and on focus-within, a keyboard user tabbing into a moving
+   strip would otherwise have the link travel out from under them. */
+.marquee {
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1.5rem;
+  animation-name: marquee-left;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.marquee[data-direction="right"] .marquee-track {
+  animation-name: marquee-right;
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 0.75rem)); }
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(calc(-50% - 0.75rem)); }
+  to { transform: translateX(0); }
+}
+
+/* No automatic movement for anyone who asked for none, the strip becomes an
+   ordinary horizontal scroller so every project is still reachable. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+  }
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* Uncropped plates are shown at their own proportions, which on a wide column
+   makes a portrait drawing taller than the screen, measured at 1879px against
+   a 900px viewport before this cap. Constraining height as well as width lets
+   the browser scale the image down proportionally (it is a replaced element, so
+   both constraints apply at once) and centre what is left. */
+.plate-fit {
+  max-width: 100%;
+  max-height: 80svh;
+  width: auto;
+  margin-inline: auto;
+}
+
+/* Masked heading reveal, the line rises out of its own baseline. The mask is
+   the element itself; only the inner span moves. Extra bottom padding keeps
+   descenders (g, y, p) from being clipped by the overflow. */
+.reveal-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+}
+
+.reveal-mask > span {
+  display: block;
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.js .reveal-mask[data-shown="false"] > span {
+  transform: translateY(110%);
+}
+
+/* Card tilt. The transform itself is written by JS on the inner element; this
+   just establishes the perspective and keeps the return-to-rest smooth. */
+.tilt {
+  perspective: 1000px;
+}
+
+.tilt > * {
+  transition: transform var(--dur-base) var(--ease-out-expo);
+  transform-style: preserve-3d;
+}
+
+.tilt[data-active="true"] > * {
+  /* While tracking the pointer, JS drives the transform every frame, a
+     transition here would lag behind it. */
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt > * {
+    transform: none !important;
+  }
 }
 
 @utility font-display {
@@ -83,6 +276,3 @@
   font-weight: 500;
 }
 
-@utility hairline {
-  border-top: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
-}
