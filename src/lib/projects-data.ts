@@ -595,14 +595,14 @@ export const projectsByCategory: Record<string, Project[]> = {
       description:
         "A landscape study along the Ravi. Hand-drawn site maps set the baradari, the informal settlement and the kachi abadi against primary roads, urban nullahs and remaining green cover, and the shelter itself is drawn as a raised circular platform built around an existing tree.",
       cover:
-        "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.42.55 PM.jpeg",
+        "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.47.32 PM (5).jpeg",
       gallery: [
+        "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.47.32 PM (5).jpeg",
         "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.42.55 PM.jpeg",
         "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.47.32 PM (1).jpeg",
         "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.47.32 PM (2).jpeg",
         "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.47.32 PM (3).jpeg",
         "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.47.32 PM (4).jpeg",
-        "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.47.32 PM (5).jpeg",
         "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.47.32 PM.jpeg",
         "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.57.25 PM (1).jpeg",
         "/projects/landscape/landscape design/Ravi jungle shelter houses/WhatsApp Image 2026-08-07 at 1.57.25 PM (2).jpeg",
