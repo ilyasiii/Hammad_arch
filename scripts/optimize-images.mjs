@@ -71,10 +71,26 @@ async function placeholderColor(pipeline) {
   return `#${hex(r)}${hex(g)}${hex(b)}`;
 }
 
+/** The manifest from a previous run, so unchanged images can skip all decoding. */
+const PREVIOUS = existsSync(MANIFEST) ? JSON.parse(readFileSync(MANIFEST, "utf8")) : {};
+
 async function processOne(absPath) {
   const rel = "/" + relative(PUBLIC, absPath).split("\\").join("/");
   const bytes = await readFile(absPath);
   const hash = createHash("sha256").update(bytes).digest("hex").slice(0, 10);
+
+  // Nothing to do when the previous run recorded this exact content and every
+  // derivative it promised is still on disk. This is what makes a deploy cheap:
+  // with public/_opt committed, the whole run is a hash pass over the sources
+  // rather than 320 image decodes.
+  const prior = PREVIOUS[rel];
+  if (
+    prior &&
+    prior[0] === hash &&
+    prior[4].every((w) => ["avif", "webp"].every((e) => existsSync(join(OUT_DIR, `${hash}-${w}.${e}`))))
+  ) {
+    return { rel, entry: prior, written: 0 };
+  }
 
   const base = sharp(bytes, { limitInputPixels: 0 });
   const meta = await base.metadata();
