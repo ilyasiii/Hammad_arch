@@ -93,12 +93,12 @@ function Contact() {
               <dt className="font-label text-muted-foreground">Email</dt>
               <dd className="mt-1 text-xl">
                 <a
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=phgstudio44@gmail.com"
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=studiophg16@gmail.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-clay"
                 >
-                  phgstudio44@gmail.com
+                  studiophg16@gmail.com
                 </a>
               </dd>
             </Reveal>

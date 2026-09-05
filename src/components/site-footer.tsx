@@ -19,12 +19,12 @@ export function SiteFooter() {
         </div>
         <div className="flex flex-col gap-2 text-left md:items-end md:text-right">
           <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=phgstudio44@gmail.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=studiophg16@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
             className="font-label text-cream/70 hover:text-clay"
           >
-            phgstudio44@gmail.com
+            studiophg16@gmail.com
           </a>
           <a
             href="https://wa.me/923030444072"
