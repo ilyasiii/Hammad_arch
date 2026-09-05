@@ -14,9 +14,12 @@ import {
 } from "@/lib/projects-data";
 
 export const Route = createFileRoute("/projects/$category/$slug")({
-  head: ({ params }) => ({
-    meta: [{ title: `${params.slug} Ph. G studio` }],
-  }),
+  head: ({ params }) => {
+    // The project's own title, not the slug. A slug reads as "student-center"
+    // in the browser tab, and after a rename it no longer matches the heading.
+    const project = (projectsByCategory[params.category] ?? []).find((p) => p.slug === params.slug);
+    return { meta: [{ title: `${project?.title ?? params.slug} Ph. G studio` }] };
+  },
   component: ProjectDetail,
   notFoundComponent: () => (
     <div className="min-h-screen bg-background text-foreground">
